@@ -5,6 +5,7 @@ import { getAccentColorVariations } from "../ui/color.js";
 import { UserData } from "./data.js";
 import { DefaultUserPreferences } from "./store.js";
 import { loadBuiltinApps } from "../apps/builtin.js";
+import { SecurityLevel } from "../fssec/store.js";
 
 export class UserDaemon extends Process {
   preferencesPath = "";
@@ -27,7 +28,7 @@ export class UserDaemon extends Process {
     this.registry.setValue(RegistryHives.local, "UserDaemon.lastLoginName", this.username);
     this.registry.setValue(RegistryHives.local, "UserDaemon.lastLoginTime", new Date().getTime());
 
-    this.preferencesPath = `./Users/${this.user.uuid}/preferences.json`;
+    this.preferencesPath = this.fs.join(this.user.userFolder, "preferences.json");
 
     await this.loadPreferences();
     await this.checkUserFolders();
@@ -43,16 +44,28 @@ export class UserDaemon extends Process {
     this.environment.setProperty("whoami", this.username);
     this.environment.setProperty("useruuid", this.user.uuid);
     this.environment.setProperty("preferences", this.preferencesPath);
-    this.environment.setProperty("userprofile", `./Users/${this.user.uuid}`);
+    this.environment.setProperty("userprofile", this.user.userFolder);
+
+    const securityNode = {
+      path: this.preferencesPath,
+      readProhibit: [],
+      readAllow: [this.user.uuid],
+      writeProhibit: [],
+      writeAllow: [this.user.uuid],
+      readRequirement: SecurityLevel.system,
+      writeRequirement: SecurityLevel.system,
+    };
+
+    this.fs.fssec.setSecurityNode(this.user.userFolder, securityNode);
 
     // Load all built-in applications
     await loadBuiltinApps(this.user.uuid);
   }
 
   async checkUserFolders() {
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Documents`, this.userId);
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Pictures`, this.userId);
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Apps`, this.userId);
+    await this.fs.createDirectory(this.fs.join(this.user.userFolder, "Documents"), this.userId);
+    await this.fs.createDirectory(this.fs.join(this.user.userFolder, "Pictures"), this.userId);
+    await this.fs.createDirectory(this.fs.join(this.user.userFolder, "Apps"), this.userId);
   }
 
   async loadPreferences() {

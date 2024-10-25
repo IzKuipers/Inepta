@@ -53,6 +53,15 @@ export class UserLogic extends KernelModule {
   }
 
   getUserByName(username) {
+    if (username.toLowerCase() === "system") {
+      return {
+        admin: true,
+        userFolder: "System",
+        uuid: "SYSTEM",
+        username: "System",
+      };
+    }
+
     username &&= username.toLowerCase();
 
     const store = this.registry.getValue(RegistryHives.users, `store`);
@@ -70,7 +79,7 @@ export class UserLogic extends KernelModule {
         username: "System",
         uuid: "SYSTEM",
         admin: true,
-        userFolder: ".",
+        userFolder: "System",
       };
     }
 

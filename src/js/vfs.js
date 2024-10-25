@@ -14,10 +14,11 @@ import { KernelModule } from "./kernel/module/index.js";
 import { Log, LogType } from "./logging.js";
 
 const fs = require("fs");
-const path = require("path");
+const path = require("path/posix");
 const os = require("os");
 
 export class FileSystem extends KernelModule {
+  root;
   constructor(kernel, id) {
     super(kernel, id);
 
@@ -49,6 +50,7 @@ export class FileSystem extends KernelModule {
 
   // Ensures a directory exists, creating it if it doesn't.
   ensureDirSync(dirPath) {
+    dirPath = dirPath.replaceAll("\\", "/").replace("./", "");
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true }); // Create the directory if it doesn't exist, including parent directories.
     }
@@ -56,6 +58,8 @@ export class FileSystem extends KernelModule {
 
   // Traverses the filesystem and verifies that a directory exists.
   traverse(pathStr) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     const fullPath = path.join(this.root, pathStr); // Join root path with the given path string.
 
     // Check if the path exists and is a directory.
@@ -72,6 +76,8 @@ export class FileSystem extends KernelModule {
 
   // Writes data to a file, creating the file and directories if necessary.
   writeFile(pathStr, content, userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -85,6 +91,8 @@ export class FileSystem extends KernelModule {
 
   // Reads data from a file.
   readFile(pathStr, userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     this.canRead(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -98,6 +106,8 @@ export class FileSystem extends KernelModule {
 
   // Deletes a file from the file system.
   deleteFile(pathStr, userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -111,12 +121,16 @@ export class FileSystem extends KernelModule {
 
   // Creates a directory (and parent directories, if necessary).
   createDirectory(pathStr) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     this.ensureDirSync(fullPath); // Ensure that the directory exists or is created recursively.
   }
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
   readDirectory(pathStr, userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     this.canRead(pathStr, userId);
 
     // If the user tries to break out of the filesystem bounds, don't let them.
@@ -149,6 +163,8 @@ export class FileSystem extends KernelModule {
 
   // Deletes a directory and its contents recursively.
   deleteDirectory(pathStr, userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -162,12 +178,16 @@ export class FileSystem extends KernelModule {
 
   // Checks if a given path points to a file.
   isFile(pathStr) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     return fs.existsSync(fullPath) && fs.statSync(fullPath).isFile(); // Return true if the path exists and is a file.
   }
 
   // Checks if a given path points to a directory.
   isDir(pathStr) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     return fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory(); // Return true if the path exists and is a directory.
   }
@@ -182,19 +202,23 @@ export class FileSystem extends KernelModule {
 
   // Returns the parent directory of the given path.
   getParentDirectory(p) {
-    const split = p.split(path.sep); // Split the path into its components using the path separator.
+    p = p.replaceAll("\\", "/").replace("./", "");
+
+    const split = p.split("/"); // Split the path into its components using the path separator.
 
     if (p == "." || !split.length) return p; // Return the path itself if it's the current directory or empty.
     if (split.length == 1) return "."; // If there's only one part, return the current directory.
 
     split.splice(-1); // Remove the last part (i.e., the file or last directory).
 
-    const newPath = split.join(path.sep); // Join the remaining parts back into a path.
+    const newPath = split.join("/"); // Join the remaining parts back into a path.
     return newPath; // Return the parent directory path.
   }
 
   // Function to verify that the user is allowed to read an item
   canRead(path, userId) {
+    path = path.replaceAll("\\", "/").replace("./", "");
+
     if (!this.fssec) {
       // No FSSec? Then everything is allowed.
       Log(
@@ -206,14 +230,21 @@ export class FileSystem extends KernelModule {
       return true;
     }
 
+    // Get the security level of the user, default to System
     const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
+    // Check if the user can read the item
     const canRead = this.fssec.canReadItem(path, securityLevel, userId);
 
+    // No permission? throw an error.
     if (!canRead) throw new Error(`Access denied: "READ" not allowed on ${path}`);
   }
 
+  // Function to verify that the user is allowed to write an item
   canWrite(path, userId) {
+    path = path.replaceAll("\\", "/").replace("./", "");
+
     if (!this.fssec) {
+      // No FSSec? Then everything is allowed.
       Log(
         "FileSystem.canWrite",
         `FSSec isn't loaded! Allowing everything for ${path}`,
@@ -223,9 +254,35 @@ export class FileSystem extends KernelModule {
       return true;
     }
 
+    // Get the security level of the user, default to System
     const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
+    // Check if the user can write the item
     const canWrite = this.fssec.canWriteItem(path, securityLevel, userId);
 
+    // No permission? throw an error.
     if (!canWrite) throw new Error(`Access denied: "WRITE" not allowed on ${path}`);
+  }
+
+  getAllPaths(pathStr = "/", userId) {
+    pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
+
+    const allPaths = [];
+
+    const traverseDir = (currentPath) => {
+      const { dirs, files } = this.readDirectory(currentPath, userId);
+
+      files.forEach((file) => allPaths.push(this.join(currentPath, file.name)));
+      dirs.forEach((dir) => {
+        const dirPath = this.join(currentPath, dir.name);
+
+        allPaths.push(dirPath);
+
+        traverseDir(dirPath);
+      });
+    };
+
+    traverseDir(pathStr);
+
+    return allPaths;
   }
 }

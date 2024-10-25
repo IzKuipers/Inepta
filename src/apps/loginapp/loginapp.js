@@ -239,6 +239,8 @@ export default class LoginAppProcess extends AppProcess {
 
     if (!user) return false;
 
+    if (!user.password) return true;
+
     const passwordValid = await this.userlogic.verifyPassword(password, user.password);
 
     if (!passwordValid) return false;

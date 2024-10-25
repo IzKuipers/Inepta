@@ -85,7 +85,7 @@ export default class CabinetProcess extends AppProcess {
   updateStatusbar() {
     if (!this.contents || !this.contents.files || !this.contents.dirs) return;
 
-    const split = this.path.split(sep);
+    const split = this.path.split("/");
 
     const fileCount = this.getElement("#fileCount", true);
     const folderCount = this.getElement("#folderCount", true);

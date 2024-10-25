@@ -58,7 +58,7 @@ export default class NapkinProcess extends AppProcess {
         return this.windowTitle.set("Napkin");
       }
 
-      const split = v.split(sep);
+      const split = v.split("/");
       const filename = split[split.length - 1];
 
       this.windowTitle.set(`${filename} - Napkin`);
