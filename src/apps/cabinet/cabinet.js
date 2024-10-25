@@ -67,7 +67,6 @@ export default class CabinetProcess extends AppProcess {
       this.path = path;
       this.contents = contents;
     } catch (e) {
-      console.log(e);
       MessageBox({
         title: "Can't open directory",
         message: `The specified directory could not be opened. Please check the name and try again.<br><br>${e.message}`,

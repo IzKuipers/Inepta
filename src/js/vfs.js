@@ -117,7 +117,6 @@ export class FileSystem extends KernelModule {
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
   readDirectory(pathStr, userId) {
-    console.log(pathStr, userId);
     this.canRead(pathStr, userId);
 
     // If the user tries to break out of the filesystem bounds, don't let them.
