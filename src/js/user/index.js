@@ -86,7 +86,7 @@ export class UserLogic extends KernelModule {
 
     if (!user) return false;
 
-    this.fs.createDirectory(user.userFolder);
+    this.fs.createDirectory(user.userFolder, user.uuid);
 
     await this.initializePreferences(user);
 
@@ -98,7 +98,7 @@ export class UserLogic extends KernelModule {
 
     const preferencesPath = join(user.userFolder, "preferences.json");
 
-    await this.fs.writeFile(preferencesPath, JSON.stringify(DefaultUserPreferences));
+    await this.fs.writeFile(preferencesPath, JSON.stringify(DefaultUserPreferences), user.uuid);
   }
 
   async hashPassword(password) {

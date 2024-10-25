@@ -26,7 +26,7 @@ export class IneptaKernel {
 
     this.startMs = new Date().getTime();
 
-    handleGlobalErrors();
+    // handleGlobalErrors();
     handleConsoleIntercepts();
 
     setKernel(this);

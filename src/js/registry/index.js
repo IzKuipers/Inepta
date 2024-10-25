@@ -47,19 +47,19 @@ export class IneptaRegistry extends KernelModule {
 
   async loadRegistry() {
     try {
-      const contents = this.fs.readFile(this.PATH);
+      const contents = this.fs.readFile(this.PATH, "SYSTEM");
 
       this.store.set(JSON.parse(contents));
     } catch {
       this.store.set({});
 
-      this.fs.writeFile(this.PATH, JSON.stringify({}));
+      this.fs.writeFile(this.PATH, JSON.stringify({}), "SYSTEM");
     }
   }
 
   registrySync() {
     this.store.subscribe((v) => {
-      this.fs.writeFile(this.PATH, JSON.stringify(v));
+      this.fs.writeFile(this.PATH, JSON.stringify(v), "SYSTEM");
     });
   }
 
@@ -80,5 +80,9 @@ export class IneptaRegistry extends KernelModule {
 
   getValue(hive = RegistryHives.local, path) {
     return getJsonHierarchy(this.store.get(), `${hive}.${path}`);
+  }
+
+  getHive(hive = RegistryHives.local) {
+    return getJsonHierarchy(this.store.get(), hive);
   }
 }

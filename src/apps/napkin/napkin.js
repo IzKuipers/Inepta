@@ -104,7 +104,7 @@ export default class NapkinProcess extends AppProcess {
   }
 
   loadFile(path = this.file.get()) {
-    const contents = this.fs.readFile(path);
+    const contents = this.fs.readFile(path, this.userId);
 
     this.textarea.value = contents;
     this.modified = false;
@@ -121,7 +121,7 @@ export default class NapkinProcess extends AppProcess {
 
     if (!file) return this.safeAs();
 
-    this.fs.writeFile(file, this.textarea.value);
+    this.fs.writeFile(file, this.textarea.value, this.userId);
     this.modified = false;
   }
 

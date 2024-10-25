@@ -1,6 +1,7 @@
 import { CloneModule } from "../../clone/index.js";
 import { ToolbarModule } from "../../electron/toolbar.js";
 import { Environment } from "../../environment/index.js";
+import { FileSystemSecurity } from "../../fssec/index.js";
 import { PowerLogic } from "../../power/index.js";
 import { ProcessHandler } from "../../process/handler.js";
 import { IneptaRegistry } from "../../registry/index.js";
@@ -11,11 +12,12 @@ import { FileSystem } from "../../vfs.js";
 export const CoreKernelModules = {
   fs: FileSystem,
   registry: IneptaRegistry,
+  userlogic: UserLogic,
+  fssec: FileSystemSecurity,
   clone: CloneModule,
   powerlogic: PowerLogic,
   toolbar: ToolbarModule,
   context: ContextMenuLogic,
   environment: Environment,
-  userlogic: UserLogic,
   stack: ProcessHandler,
 };

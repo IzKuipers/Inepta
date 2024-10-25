@@ -50,14 +50,14 @@ export class UserDaemon extends Process {
   }
 
   async checkUserFolders() {
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Documents`);
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Pictures`);
-    await this.fs.createDirectory(`./Users/${this.user.uuid}/Apps`);
+    await this.fs.createDirectory(`./Users/${this.user.uuid}/Documents`, this.userId);
+    await this.fs.createDirectory(`./Users/${this.user.uuid}/Pictures`, this.userId);
+    await this.fs.createDirectory(`./Users/${this.user.uuid}/Apps`, this.userId);
   }
 
   async loadPreferences() {
     try {
-      const contents = this.fs.readFile(this.preferencesPath);
+      const contents = this.fs.readFile(this.preferencesPath, this.userId);
 
       UserData.set({
         ...JSON.parse(contents.toString()),
@@ -68,7 +68,8 @@ export class UserDaemon extends Process {
 
       this.fs.writeFile(
         this.preferencesPath,
-        JSON.stringify({ ...DefaultUserPreferences, username: this.username })
+        JSON.stringify({ ...DefaultUserPreferences, username: this.username }),
+        this.userId
       );
     }
   }
@@ -76,7 +77,7 @@ export class UserDaemon extends Process {
   preferencesSync() {
     UserData.subscribe((v) => {
       if (this._disposed) return;
-      this.fs.writeFile(this.preferencesPath, JSON.stringify(v, null, 2));
+      this.fs.writeFile(this.preferencesPath, JSON.stringify(v, null, 2), this.userId);
     });
   }
 

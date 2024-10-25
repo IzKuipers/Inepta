@@ -61,11 +61,12 @@ export default class CabinetProcess extends AppProcess {
 
   goHere(path) {
     try {
-      const contents = this.fs.readDirectory(path);
+      const contents = this.fs.readDirectory(path, this.userId);
 
       this.path = path;
       this.contents = contents;
-    } catch {
+    } catch (e) {
+      console.log(e);
       MessageBox({
         title: "Can't open directory",
         message: `The specified directory could not be found. Please check the name and try again.<br><br>Path: ${path}`,

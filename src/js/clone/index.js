@@ -1,4 +1,5 @@
 import { VERSION } from "../../env.js";
+import { SecurityLevel } from "../fssec/store.js";
 import { KernelModule } from "../kernel/module/index.js";
 import { Log, LogStore, LogType } from "../logging.js";
 import { Sleep } from "../sleep.js";
@@ -17,6 +18,7 @@ export class CloneModule extends KernelModule {
     super(kernel, id);
 
     this.fs = kernel.getModule("fs");
+    this.fssec = kernel.getModule("fssec");
   }
 
   async _init() {
@@ -59,7 +61,10 @@ export class CloneModule extends KernelModule {
           continue;
         }
 
-        this.fs.writeFile(path, await readFile(path));
+        this.fs.writeFile(path, await readFile(path), "SYSTEM");
+        this.fssec.createSecurityNode(path);
+        this.fssec.setReadRequirement(path, SecurityLevel.user);
+        this.fssec.setWriteRequirement(path, SecurityLevel.admin);
 
         cb(path);
       } catch {
