@@ -25,13 +25,14 @@ export default async function render() {
     await Sleep(2000);
 
     progressBar.setIndeterminate(false);
-    progressBar.setMax(clone.paths.length);
+    progressBar.setMax(clone.paths.length * 2);
     progressBar.setValue(0);
 
     let elapsed = 0;
 
     await clone.doClone((p) => {
       status.innerText = `Cloned ${p}`;
+
       elapsed++;
 
       progressBar.setValue(elapsed);

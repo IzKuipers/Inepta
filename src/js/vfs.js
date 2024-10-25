@@ -48,9 +48,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Ensures a directory exists, creating it if it doesn't.
-  ensureDirSync(dirPath, userId) {
-    this.canWrite(dirPath, userId);
-
+  ensureDirSync(dirPath) {
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true }); // Create the directory if it doesn't exist, including parent directories.
     }
@@ -78,7 +76,7 @@ export class FileSystem extends KernelModule {
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     const dirPath = path.dirname(fullPath); // Get the directory part of the full path.
-    this.ensureDirSync(dirPath, userId); // Ensure that the directory exists.
+    this.ensureDirSync(dirPath); // Ensure that the directory exists.
 
     // If the content is a buffer, use it directly; otherwise, convert it to a buffer.
     const data = Buffer.isBuffer(content) ? content : Buffer.from(content);
@@ -112,9 +110,9 @@ export class FileSystem extends KernelModule {
   }
 
   // Creates a directory (and parent directories, if necessary).
-  createDirectory(pathStr, userId) {
+  createDirectory(pathStr) {
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
-    this.ensureDirSync(fullPath, userId); // Ensure that the directory exists or is created recursively.
+    this.ensureDirSync(fullPath); // Ensure that the directory exists or is created recursively.
   }
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
@@ -196,9 +194,15 @@ export class FileSystem extends KernelModule {
     return newPath; // Return the parent directory path.
   }
 
+  // Function to verify that the user is allowed to read an item
   canRead(path, userId) {
     if (!this.fssec) {
-      Log("FileSystem.canRead", `Warning: FSSec isn't loaded yet!`, LogType.warning);
+      // No FSSec? Then everything is allowed.
+      Log(
+        "FileSystem.canRead",
+        `FSSec isn't loaded! Allowing everything for ${path}`,
+        LogType.warning
+      );
 
       return true;
     }
@@ -206,14 +210,16 @@ export class FileSystem extends KernelModule {
     const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
     const canRead = this.fssec.canReadItem(path, securityLevel, userId);
 
-    console.log(path, userId, securityLevel);
-
-    if (!canRead) throw new Error("Permission denied");
+    if (!canRead) throw new Error(`Access denied: "READ" not allowed on ${path}`);
   }
 
   canWrite(path, userId) {
     if (!this.fssec) {
-      Log("FileSystem.canWrite", `Warning: FSSec isn't loaded yet!`, LogType.warning);
+      Log(
+        "FileSystem.canWrite",
+        `FSSec isn't loaded! Allowing everything for ${path}`,
+        LogType.warning
+      );
 
       return true;
     }
@@ -221,8 +227,6 @@ export class FileSystem extends KernelModule {
     const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
     const canWrite = this.fssec.canWriteItem(path, securityLevel, userId);
 
-    console.log(path, userId, securityLevel);
-
-    if (!canWrite) throw new Error("Permission denied");
+    if (!canWrite) throw new Error(`Access denied: "WRITE" not allowed on ${path}`);
   }
 }

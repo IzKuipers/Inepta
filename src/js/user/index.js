@@ -76,6 +76,8 @@ export class UserLogic extends KernelModule {
 
     const store = this.registry.getValue(RegistryHives.users, `store`);
 
+    if (!store) return undefined;
+
     return store[uuid];
   }
 

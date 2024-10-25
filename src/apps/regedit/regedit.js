@@ -37,14 +37,20 @@ export default class RegEditProcess extends AppProcess {
 
     button.className = "expander";
     button.innerText = "Registry";
-    button.addEventListener("click", () => {
-      this.select("");
-    });
 
-    this.hierarchy.subscribe((v) => {
-      if (!v) button.classList.add("selected");
-      else button.classList.remove("selected");
-    });
+    button.addEventListener(
+      "click",
+      this.safe(() => {
+        this.select("");
+      })
+    );
+
+    this.hierarchy.subscribe(
+      this.safe((v) => {
+        if (!v) button.classList.add("selected");
+        else button.classList.remove("selected");
+      })
+    );
 
     indent.append(...rootObjects);
     rootBranch.append(button, indent);
@@ -92,22 +98,27 @@ export default class RegEditProcess extends AppProcess {
 
       const currentPath = path ? `${path}.${key}` : key;
 
-      button.addEventListener("click", () => {
-        if (currentPath === this.hierarchy.get() && indent.childElementCount > 0)
-          branch.classList.toggle("expanded");
-        else {
-          branch.classList.add("expanded");
-        }
+      button.addEventListener(
+        "click",
+        this.safe(() => {
+          if (currentPath === this.hierarchy.get() && indent.childElementCount > 0)
+            branch.classList.toggle("expanded");
+          else {
+            branch.classList.add("expanded");
+          }
 
-        if (this.hierarchy.get() !== currentPath) this.select(currentPath);
-      });
+          if (this.hierarchy.get() !== currentPath) this.select(currentPath);
+        })
+      );
 
-      this.hierarchy.subscribe((v) => {
-        if (currentPath == v) {
-          button.classList.add("selected");
-          branch.classList.add("expanded");
-        } else button.classList.remove("selected");
-      });
+      this.hierarchy.subscribe(
+        this.safe((v) => {
+          if (currentPath == v) {
+            button.classList.add("selected");
+            branch.classList.add("expanded");
+          } else button.classList.remove("selected");
+        })
+      );
 
       branch.append(button);
 
@@ -162,47 +173,53 @@ export default class RegEditProcess extends AppProcess {
       valuelength.innerText = `${JSON.stringify(element).length} bytes`;
       type.innerText = `REG_${Array.isArray(element) ? "ARRAY" : (typeof element).toUpperCase()}`;
 
-      row.addEventListener("click", () => {
-        const path = hierarchy ? `${hierarchy}.${key}` : key;
-        if (typeof element === "object" && !Array.isArray(element)) {
-          this.select(path);
-        } else {
-          this.editValue(path, element);
-        }
-      });
+      row.addEventListener(
+        "click",
+        this.safe(() => {
+          const path = hierarchy ? `${hierarchy}.${key}` : key;
+          if (typeof element === "object" && !Array.isArray(element)) {
+            this.select(path);
+          } else {
+            this.editValue(path, element);
+          }
+        })
+      );
 
-      row.addEventListener("contextmenu", (e) => {
-        const path = hierarchy ? `${hierarchy}.${key}` : key;
+      row.addEventListener(
+        "contextmenu",
+        this.safe((e) => {
+          const path = hierarchy ? `${hierarchy}.${key}` : key;
 
-        const options = [];
+          const options = [];
 
-        if (typeof element === "object" && !Array.isArray(element)) {
-          options.push(
-            {
-              caption: "Navigate here",
-              action: () => {
-                this.select(path);
+          if (typeof element === "object" && !Array.isArray(element)) {
+            options.push(
+              {
+                caption: "Navigate here",
+                action: () => {
+                  this.select(path);
+                },
+                separator: true,
+                default: true,
               },
-              separator: true,
+              {
+                caption: "Rename...",
+                action: () => {},
+              }
+            );
+          } else {
+            options.push({
+              caption: "Edit value...",
+              action: () => {
+                this.editValue(path, element);
+              },
               default: true,
-            },
-            {
-              caption: "Rename...",
-              action: () => {},
-            }
-          );
-        } else {
-          options.push({
-            caption: "Edit value...",
-            action: () => {
-              this.editValue(path, element);
-            },
-            default: true,
-          });
-        }
+            });
+          }
 
-        this.context.showMenu(e.clientX, e.clientY, options);
-      });
+          this.context.showMenu(e.clientX, e.clientY, options);
+        })
+      );
 
       row.append(name, value, valuelength, type);
 

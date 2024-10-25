@@ -1,4 +1,5 @@
 import { KernelModule } from "../kernel/module/index.js";
+import { Log } from "../logging.js";
 import { RegistryHives } from "../registry/store.js";
 import { SecurityLevel } from "./store.js";
 
@@ -11,11 +12,12 @@ export class FileSystemSecurity extends KernelModule {
     this.registry = kernel.getModule("registry");
     this.fs = kernel.getModule("fs");
     this.userLogic = kernel.getModule("userlogic");
-
-    this.fs.fssec = this;
   }
 
-  async _init() {}
+  async _init() {
+    Log("FileSystemSecurity._init", "Loading FSSec into 'fs' kernel module");
+    this.fs.fssec = this;
+  }
 
   getSecurityNode(path) {
     const store = this.registry.getHive(RegistryHives.security);
@@ -40,16 +42,20 @@ export class FileSystemSecurity extends KernelModule {
       .map(([uuid]) => uuid)[0];
   }
 
-  createSecurityNode(path) {
+  createSecurityNode(path, options = {}) {
+    const existing = this.getSecurityNode(path);
+
+    if (existing) return existing;
+
     const uuid = randomUUID();
     const data = {
       path,
-      readProhibit: [],
-      readAllow: [],
-      writeProhibit: [],
-      writeAllow: [],
-      readRequirement: SecurityLevel.user,
-      writeRequirement: SecurityLevel.user,
+      readProhibit: options.readProhibit || [],
+      readAllow: options.readAllow || [],
+      writeProhibit: options.writeProhibit || [],
+      writeAllow: options.writeAllow || [],
+      readRequirement: options.readRequirement ?? SecurityLevel.user,
+      writeRequirement: options.writeRequirement ?? SecurityLevel.user,
     };
 
     this.registry.setValue(RegistryHives.security, uuid, data);
@@ -83,7 +89,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     if (node.readAllow.includes(userId)) return;
     if (node.readProhibit.includes(userId)) {
@@ -99,7 +105,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     if (node.readProhibit.includes(userId)) return;
     if (node.readAllow.includes(userId)) {
@@ -115,7 +121,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     if (node.writeAllow.includes(userId)) return;
     if (node.writeProhibit.includes(userId)) {
@@ -131,7 +137,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     if (node.writeProhibit.includes(userId)) return;
     if (node.writeAllow.includes(userId)) {
@@ -147,7 +153,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     node.readRequirement = requirement;
 
@@ -158,7 +164,7 @@ export class FileSystemSecurity extends KernelModule {
     const uuid = this.findIdByPath(path);
     const node = this.getSecurityNodeById(uuid);
 
-    if (!node) throw new Error(`No permissions set for ${path}`);
+    if (!node) throw new Error(`No permission node for ${path}`);
 
     node.writeRequirement = requirement;
 

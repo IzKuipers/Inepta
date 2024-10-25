@@ -70,7 +70,7 @@ export default class CabinetProcess extends AppProcess {
       console.log(e);
       MessageBox({
         title: "Can't open directory",
-        message: `The specified directory could not be found. Please check the name and try again.<br><br>Path: ${path}`,
+        message: `The specified directory could not be opened. Please check the name and try again.<br><br>${e.message}`,
         buttons: [{ caption: "Okay", action() {} }],
         icon: MessageIcons.critical,
       });
@@ -145,9 +145,12 @@ export default class CabinetProcess extends AppProcess {
     created.innerText = strftime("%e %b %G %H:%M", new Date(directory.dateCreated));
     size.innerText = "-";
 
-    item.addEventListener("click", () => {
-      this.navigate(this.fs.join(this.path, directory.name));
-    });
+    item.addEventListener(
+      "click",
+      this.safe(() => {
+        this.navigate(this.fs.join(this.path, directory.name));
+      })
+    );
 
     return item;
   }

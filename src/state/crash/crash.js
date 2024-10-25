@@ -3,12 +3,12 @@ import { LogStore, LogType } from "../../js/logging.js";
 import { RegistryHives } from "../../js/registry/store.js";
 import { Sleep } from "../../js/sleep.js";
 import { getStateProps } from "../../js/state/store.js";
+
 export default async function render() {
   const crashText = document.getElementById("crashText");
 
   if (!crashText) return;
 
-  const stateLoader = document.querySelector("div#stateLoader");
   const appRenderer = document.querySelector("div#appRenderer");
 
   appRenderer.remove();

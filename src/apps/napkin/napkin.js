@@ -104,10 +104,19 @@ export default class NapkinProcess extends AppProcess {
   }
 
   loadFile(path = this.file.get()) {
-    const contents = this.fs.readFile(path, this.userId);
+    try {
+      const contents = this.fs.readFile(path, this.userId);
 
-    this.textarea.value = contents;
-    this.modified = false;
+      this.textarea.value = contents;
+      this.modified = false;
+    } catch (e) {
+      MessageBox({
+        title: "Can't open file",
+        message: e,
+        buttons: [{ caption: "Okay", action: () => {} }],
+        icon: MessageIcons.warning,
+      });
+    }
   }
 
   newFile() {
@@ -117,12 +126,21 @@ export default class NapkinProcess extends AppProcess {
   }
 
   save() {
-    const file = this.file.get();
+    try {
+      const file = this.file.get();
 
-    if (!file) return this.safeAs();
+      if (!file) return this.saveAs();
 
-    this.fs.writeFile(file, this.textarea.value, this.userId);
-    this.modified = false;
+      this.fs.writeFile(file, this.textarea.value, this.userId);
+      this.modified = false;
+    } catch {
+      MessageBox({
+        title: "Can't save file",
+        message: e,
+        buttons: [{ caption: "Okay", action: () => {} }],
+        icon: MessageIcons.warning,
+      });
+    }
   }
 
   saveAs() {

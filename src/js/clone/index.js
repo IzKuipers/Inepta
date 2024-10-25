@@ -62,9 +62,6 @@ export class CloneModule extends KernelModule {
         }
 
         this.fs.writeFile(path, await readFile(path), "SYSTEM");
-        this.fssec.createSecurityNode(path);
-        this.fssec.setReadRequirement(path, SecurityLevel.user);
-        this.fssec.setWriteRequirement(path, SecurityLevel.admin);
 
         cb(path);
       } catch {
@@ -74,6 +71,19 @@ export class CloneModule extends KernelModule {
       }
 
       await Sleep(3);
+    }
+
+    for (const path of this.paths) {
+      cb(`${path} (FSSEC)`);
+
+      this.fssec.createSecurityNode(path, {
+        readRequirement: SecurityLevel.user,
+        writeRequirement: SecurityLevel.admin,
+        readAllow: ["SYSTEM"],
+        writeAllow: ["SYSTEM"],
+      });
+
+      await Sleep(1);
     }
 
     const logs = {};
