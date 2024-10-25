@@ -4,6 +4,7 @@ import { strftime } from "../../js/desktop/date.js";
 import { MessageBox } from "../../js/desktop/message.js";
 import { MessageIcons } from "../../js/images/msgbox.js";
 import { Store } from "../../js/store.js";
+import { formatBytes } from "../../js/util/bytes.js";
 
 const { sep } = require("path");
 
@@ -160,7 +161,7 @@ export default class CabinetProcess extends AppProcess {
     name.innerText = file.name;
     modified.innerText = strftime("%e %b %G %H:%M", new Date(file.dateModified));
     created.innerText = strftime("%e %b %G %H:%M", new Date(file.dateCreated));
-    size.innerText = file.size;
+    size.innerText = formatBytes(file.size);
 
     item.addEventListener("click", () => {
       spawnApp("napkin", undefined, this.userId, this.fs.join(this.path, file.name));
