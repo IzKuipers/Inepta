@@ -116,6 +116,7 @@ export default class NapkinProcess extends AppProcess {
         buttons: [{ caption: "Okay", action: () => {} }],
         icon: MessageIcons.warning,
       });
+      this.closeWindow();
     }
   }
 

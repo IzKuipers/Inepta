@@ -219,6 +219,10 @@ export class FileSystem extends KernelModule {
   canRead(path, userId) {
     path = path.replaceAll("\\", "/").replace("./", "");
 
+    if (this.fsSecLoaded && !this.fssec) {
+      throw new Error(`FSSec disappeared. Please restart.`);
+    }
+
     if (!this.fssec) {
       // No FSSec? Then everything is allowed.
       Log(
@@ -228,6 +232,8 @@ export class FileSystem extends KernelModule {
       );
 
       return true;
+    } else {
+      this.fsSecLoaded = true;
     }
 
     // Get the security level of the user, default to System
@@ -252,6 +258,8 @@ export class FileSystem extends KernelModule {
       );
 
       return true;
+    } else {
+      this.fsSecLoaded = true;
     }
 
     // Get the security level of the user, default to System

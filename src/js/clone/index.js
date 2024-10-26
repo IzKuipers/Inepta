@@ -74,6 +74,14 @@ export class CloneModule extends KernelModule {
     }
 
     for (const path of this.paths) {
+      if (this.IGNORE_LIST.includes(path)) {
+        Log("CloneModule.doClone", `IGNORED: ${path}`, LogType.warning);
+
+        cb(`${path} (IGNORED)`);
+
+        continue;
+      }
+
       cb(`${path} (FSSEC)`);
 
       this.fssec.createSecurityNode(path, {

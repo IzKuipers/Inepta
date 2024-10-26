@@ -20,6 +20,8 @@ export class FileSystemSecurity extends KernelModule {
     Log("FileSystemSecurity._init", "Loading FSSec into 'fs' kernel module");
     this.fs.fssec = this;
 
+    Log("FileSystemSecurity._init", "Resetting permissions for the Inepta Registry");
+
     this.createSecurityNode("System/Registry.json", {
       readRequirement: SecurityLevel.system,
       writeRequirement: SecurityLevel.system,
@@ -76,8 +78,6 @@ export class FileSystemSecurity extends KernelModule {
 
     const existing = this.getSecurityNode(path);
 
-    if (existing) return existing;
-
     const uuid = randomUUID();
     const data = {
       path,
@@ -88,6 +88,8 @@ export class FileSystemSecurity extends KernelModule {
       readRequirement: options.readRequirement ?? SecurityLevel.user,
       writeRequirement: options.writeRequirement ?? SecurityLevel.user,
     };
+
+    if (existing) return this.setSecurityNode(path, data);
 
     this.registry.setValue(RegistryHives.security, uuid, data);
     this.replicate(path, data);
