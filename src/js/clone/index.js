@@ -71,8 +71,6 @@ export class CloneModule extends KernelModule {
 
         cb(`${path} (FAILED)`);
       }
-
-      await Sleep(3);
     }
 
     cb(`Applying permissions...`);

@@ -6,6 +6,13 @@ export const States = {
     name: "Boot",
     identifier: "boot-screen",
   },
+  firstrun: {
+    js: "../../state/firstrun/firstrun.js",
+    css: "./css/state/firstrun.css",
+    html: "./state/firstrun/firstrun.html",
+    name: "First Run",
+    identifier: "first-run",
+  },
   crash: {
     js: "../../state/crash/crash.js",
     css: "./css/state/crash.css",

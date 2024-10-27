@@ -19,40 +19,17 @@ export default async function render() {
 
   progressBar.setIndeterminate(true);
 
-  if (clone.needsClone) {
-    status.innerText = "Cloning filesystem";
-
-    await Sleep(2000);
-
-    progressBar.setIndeterminate(false);
-    progressBar.setMax(clone.paths.length * 2);
-    progressBar.setValue(0);
-
-    let elapsed = 0;
-
-    await clone.doClone((p) => {
-      status.innerText = `Cloned ${p}`;
-
-      elapsed++;
-
-      progressBar.setValue(elapsed);
-    });
-
-    status.innerText = "Loading...";
-
-    await Sleep(1000);
-
-    location.reload();
-
-    return;
-  }
-
   if (!registry.getValue(RegistryHives.local, "initialSetup.completed")) {
     status.innerText = "Welcome to Inepta";
   }
 
   await Sleep(3000);
 
-  KERNEL.state.loadState(KERNEL.state.store.login);
+  if (clone.needsClone) {
+    KERNEL.state.loadState(KERNEL.state.store.firstrun);
+  } else {
+    KERNEL.state.loadState(KERNEL.state.store.login);
+  }
+
   console.trace();
 }

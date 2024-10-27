@@ -1,3 +1,4 @@
+import { SecurityLevel } from "../fssec/store.js";
 import { KernelModule } from "../kernel/module/index.js";
 import { RegistryHives } from "../registry/store.js";
 import { DefaultUserData, DefaultUserPreferences } from "./store.js";

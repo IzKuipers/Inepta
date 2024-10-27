@@ -1,0 +1,143 @@
+.first-run div.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.first-run div.circles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: blur(50px);
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.first-run div.circles.visible {
+  opacity: 1;
+}
+
+.first-run div.container #progressText {
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  opacity: 0.4;
+  font-size: 16px;
+}
+
+.first-run div.container #statusText {
+  opacity: 0;
+  transition: opacity 0.8s;
+  font-size: 28px;
+  font-weight: 600;
+  text-shadow: 0 0 20px #000a;
+}
+
+.first-run div.container #statusText:not(.hidden) {
+  opacity: 1;
+}
+
+.first-run .circles * {
+  transition: all 500ms !important;
+}
+
+.first-run .circles .circle1 {
+  left: 30vw;
+  top: 25vh;
+  position: absolute;
+  animation: circle1Path 12s infinite, fadeCircleIn 1332ms ease-out;
+  animation-direction: alternate;
+  border-radius: 100vw;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(255, 101, 12, 0.3) 15.62%,
+    rgba(255, 101, 12, 0) 100%
+  );
+}
+
+.first-run .circles .circle2 {
+  left: 45vw;
+  top: 30vh;
+  position: absolute;
+  animation: circle2Path 11.5s infinite, fadeCircleIn 1332ms ease-out;
+  animation-direction: alternate;
+  border-radius: 100vw;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(255, 115, 0, 0.3) 15.62%,
+    rgba(255, 115, 0, 0) 100%
+  );
+}
+
+.first-run .circles .circle3 {
+  left: 35vw;
+  top: 30vh;
+  position: absolute;
+  animation: circle3Path 15s infinite, fadeCircleIn 1332ms ease-out;
+  animation-direction: alternate;
+  border-radius: 100vw;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(210, 87, 56, 0.5) 15.62%,
+    rgba(210, 87, 56, 0) 100%
+  );
+}
+
+@keyframes circle1Path {
+  0% {
+    transform: translate(0vw, 0vh);
+    width: 30vw;
+    height: 30vw;
+  }
+  100% {
+    transform: translate(0vw, -35vh);
+    width: 80vw;
+    height: 80vw;
+  }
+}
+
+@keyframes circle2Path {
+  0% {
+    transform: translate(0vw, 0vh);
+    width: 20vw;
+    height: 20vw;
+  }
+  100% {
+    transform: translate(-45vw, -40vh);
+    width: 80vw;
+    height: 80vw;
+  }
+}
+
+@keyframes circle3Path {
+  0% {
+    transform: translate(0vw, 0vh);
+    width: 20vw;
+    height: 20vw;
+  }
+  100% {
+    transform: translate(-55vw, -80vh);
+    width: 120vw;
+    height: 120vw;
+  }
+}
+
+@keyframes fadeCircleIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
