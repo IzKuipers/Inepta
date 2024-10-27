@@ -99,6 +99,18 @@ export class UserLogic extends KernelModule {
 
     this.fs.createDirectory(user.userFolder, user.uuid);
 
+    const securityNode = {
+      path: user.userFolder,
+      readProhibit: [],
+      readAllow: [user.uuid],
+      writeProhibit: [],
+      writeAllow: [user.uuid],
+      readRequirement: SecurityLevel.system,
+      writeRequirement: SecurityLevel.system,
+    };
+
+    this.fs.fssec.setSecurityNode(user.userFolder, securityNode);
+
     await this.initializePreferences(user);
 
     return true;

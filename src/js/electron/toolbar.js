@@ -35,7 +35,11 @@ export class ToolbarModule extends KernelModule {
     const caption = document.createElement("p");
 
     caption.className = "caption";
-    caption.innerText = "Inepta v" + VERSION.join(".");
+    caption.innerText = `${this._kernel.LIVE_MODE ? "LIVE - " : ""}Inepta v${VERSION.join(".")}`;
+
+    if (this._kernel.LIVE_MODE) {
+      document.body.classList.add("live");
+    }
 
     trigger.className = "electron-toolbar-trigger";
     toolbar.className = "electron-toolbar retracted";

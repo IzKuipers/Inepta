@@ -22,7 +22,7 @@ export class CloneModule extends KernelModule {
   }
 
   async _init() {
-    const runningClone = location.href.toLowerCase().includes("local/inepta/src");
+    const runningClone = location.href.toLowerCase().includes("local/inepta/system");
     const isLive = navigator.userAgent.includes("LIVEMODE");
 
     if (runningClone || isLive) {
@@ -32,14 +32,16 @@ export class CloneModule extends KernelModule {
       return;
     }
 
-    this.paths = (await glob("./**/*")).filter((p) => statSync(p).isFile());
+    this.paths = (await glob("./**/*"))
+      .filter((p) => statSync(p).isFile())
+      .map((p) => p.replaceAll("\\", "/"));
 
     const currentVersion = this.getRegistryValue("clonedVersion");
 
     if (!currentVersion) return (this.needsClone = true);
 
     if (currentVersion === VERSION.join(".")) {
-      location.href = this.fs.join(this.fs.root, "src/index.html");
+      location.href = this.fs.join(this.fs.root, "System/src/index.html");
       return;
     }
 
@@ -61,7 +63,7 @@ export class CloneModule extends KernelModule {
           continue;
         }
 
-        this.fs.writeFile(path, await readFile(path), "SYSTEM");
+        this.fs.writeFile(`System/${path}`, await readFile(path), "SYSTEM");
 
         cb(path);
       } catch {
@@ -72,6 +74,10 @@ export class CloneModule extends KernelModule {
 
       await Sleep(3);
     }
+
+    cb(`Applying permissions...`);
+
+    await Sleep(1000);
 
     for (const path of this.paths) {
       if (this.IGNORE_LIST.includes(path)) {
@@ -84,7 +90,7 @@ export class CloneModule extends KernelModule {
 
       cb(`${path} (FSSEC)`);
 
-      this.fssec.createSecurityNode(path, {
+      this.fssec.createSecurityNode(`System/${path}`, {
         readRequirement: SecurityLevel.user,
         writeRequirement: SecurityLevel.admin,
         readAllow: ["SYSTEM"],

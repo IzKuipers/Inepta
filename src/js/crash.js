@@ -1,5 +1,5 @@
 import { KERNEL } from "../env.js";
-import { Log, LogType } from "./logging.js";
+import { Log, LogStore, LogType } from "./logging.js";
 
 export let CRASHING = false;
 

@@ -30,6 +30,8 @@ export class IneptaKernel {
     handleConsoleIntercepts();
 
     setKernel(this);
+
+    this.LIVE_MODE = navigator.userAgent.includes("LIVEMODE");
   }
 
   async initializeCoreModules() {

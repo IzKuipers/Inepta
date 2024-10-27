@@ -30,7 +30,7 @@ export default async function render() {
     }
 
     crashes[now] = {
-      stack,
+      text,
       logPath,
       logs,
     };
