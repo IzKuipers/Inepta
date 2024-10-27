@@ -69,6 +69,8 @@ export class CloneModule extends KernelModule {
       } catch {
         Log("CloneModule.doClone", `FAILURE: ${path}`, LogType.error);
 
+        this.IGNORE_LIST.push(path);
+
         cb(`${path} (FAILED)`);
       }
     }
