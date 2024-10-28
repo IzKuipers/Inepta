@@ -6,6 +6,8 @@ import { UserData } from "./data.js";
 import { DefaultUserPreferences } from "./store.js";
 import { loadBuiltinApps } from "../apps/builtin.js";
 import { SecurityLevel } from "../fssec/store.js";
+import { MessageBox } from "../desktop/message.js";
+import { MessageIcons } from "../images/msgbox.js";
 
 export class UserDaemon extends Process {
   preferencesPath = "";
@@ -56,7 +58,18 @@ export class UserDaemon extends Process {
       writeRequirement: SecurityLevel.system,
     };
 
-    this.fs.fssec.setSecurityNode(this.user.userFolder, securityNode);
+    if (this.user.uuid !== "SYSTEM") {
+      this.fs.fssec.setSecurityNode(this.user.userFolder, securityNode);
+    } else {
+      setTimeout(() => {
+        MessageBox({
+          title: "Security Node Failed",
+          message: `Invalid operation: FSSec.setSecurityNode::SYSTEM`,
+          buttons: [{ caption: "Okay", action: () => {} }],
+          icon: MessageIcons.critical,
+        });
+      }, 1000);
+    }
 
     // Load all built-in applications
     await loadBuiltinApps(this.user.uuid);

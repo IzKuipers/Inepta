@@ -9,14 +9,14 @@ export default async function render() {
   const circlesDiv = document.querySelector("#stateLoader.first-run .circles");
 
   const startTime = new Date().getTime();
-  await displayStatus("Welcome");
-  await displayStatus("Getting Inepta ready for you");
-  await displayStatus("This will take a minute or two.");
+  await displayStatus("Hi there");
+  await displayStatus("Preparing Inepta\nDon't turn off your device", "shrunk");
 
-  async function displayStatus(status) {
+  async function displayStatus(status, className) {
     const interTime = statusText.innerText ? 700 : 0;
     statusText.classList.add("hidden");
     await Sleep(850);
+    statusText.classList.add(className);
     statusText.innerText = status;
     await Sleep(interTime);
     statusText.classList.remove("hidden");
@@ -29,14 +29,14 @@ export default async function render() {
   console.log(duration);
 
   circlesDiv.classList.add("visible");
-  progressText.innerHTML = "Preparing filesystem &mdash; 0% Complete";
+  progressText.innerHTML = "Deploying filesystem &mdash; 0% Complete";
 
   const itemLength = clone.paths.length * 2;
   let doneItems = 0;
 
   await clone.doClone(() => {
     doneItems++;
-    progressText.innerHTML = `Preparing filesystem &mdash; ${Math.floor(
+    progressText.innerHTML = `Deploying filesystem &mdash; ${Math.floor(
       (100 / itemLength) * doneItems
     )}% complete`;
   });
@@ -47,7 +47,7 @@ export default async function render() {
 
   progressText.innerHTML = "";
 
-  await displayStatus("Restarting Inepta");
+  await displayStatus("Almost ready");
   statusText.classList.add("hidden");
 
   await Sleep(800);
