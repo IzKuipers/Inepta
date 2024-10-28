@@ -8,6 +8,7 @@ export default async function render() {
   const progressText = document.querySelector("#stateLoader.first-run #progressText");
   const circlesDiv = document.querySelector("#stateLoader.first-run .circles");
 
+  const startTime = new Date().getTime();
   await displayStatus("Welcome");
   await displayStatus("Getting Inepta ready for you");
   await displayStatus("This will take a minute or two.");
@@ -21,6 +22,11 @@ export default async function render() {
     statusText.classList.remove("hidden");
     await Sleep(2000);
   }
+
+  const endTime = new Date().getTime();
+  const duration = endTime - startTime;
+
+  console.log(duration);
 
   circlesDiv.classList.add("visible");
   progressText.innerHTML = "Preparing filesystem &mdash; 0% Complete";
