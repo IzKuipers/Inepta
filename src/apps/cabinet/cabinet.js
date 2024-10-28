@@ -7,8 +7,6 @@ import { Sleep } from "../../js/sleep.js";
 import { Store } from "../../js/store.js";
 import { formatBytes } from "../../js/util/bytes.js";
 
-const { sep } = require("path");
-
 export default class CabinetProcess extends AppProcess {
   path;
   contents;
@@ -16,15 +14,21 @@ export default class CabinetProcess extends AppProcess {
   history = Store([]);
   addressBar;
   goButton;
+  aliases = {};
 
   constructor(handler, pid, parentPid, app, path) {
     super(handler, pid, parentPid, app);
 
     this.path = path || this.environment.getProperty("userprofile");
     this.fs = this.kernel.getModule("fs");
+    this.userLogic = this.kernel.getModule("userlogic");
   }
 
   render() {
+    const user = this.userLogic.getUser(this.userId);
+
+    this.aliases[user.userFolder.replace("./", "")] = "You";
+
     this.updateLocations();
     this.updateFavourites();
     this.navigationControls();
@@ -99,8 +103,12 @@ export default class CabinetProcess extends AppProcess {
     this.updateStatusbar();
     this.populateDirectory();
 
-    this.windowTitle.set(this.path);
-    this.addressBar.value = this.path;
+    const aliasedPath =
+      this.aliases[this.path.startsWith("./") ? this.path.replace("./", "") : this.path] ||
+      this.path;
+
+    this.windowTitle.set(aliasedPath);
+    this.addressBar.value = aliasedPath;
   }
 
   updateStatusbar() {
