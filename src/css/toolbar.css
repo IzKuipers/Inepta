@@ -6,7 +6,6 @@ div.electron-toolbar {
   width: 500px;
   background-color: #222;
   height: 40px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,4 +71,20 @@ div.electron-toolbar.retracted {
   translate: -50% -60px;
   box-shadow: none;
   opacity: 0;
+}
+
+body.live div.electron-toolbar::after {
+  content: "Live Mode - Use for development only";
+  position: absolute;
+  left: 0;
+  width: calc(100% - 16px);
+  bottom: -45px;
+  background-color: #fa0;
+  padding: 8px 8px;
+  border-radius: 10px;
+  text-align: center;
+  pointer-events: none;
+  color: #000;
+  font-weight: 1000;
+  z-index: 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
 }

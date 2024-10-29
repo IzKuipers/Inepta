@@ -88,6 +88,7 @@ div.loginApp div#container {
   justify-content: space-between;
   height: calc(100% - 110px);
   padding: 20px;
+  padding-top: 16px;
 }
 
 div.loginApp div#container.hidden {
@@ -100,6 +101,10 @@ div.loginApp div#container table {
 }
 div.loginApp div#container table td {
   padding: 0;
+}
+
+div.loginApp div#container table td:first-child {
+  vertical-align: middle;
 }
 
 div.loginApp div#container div.actions {
@@ -115,9 +120,9 @@ div.loginApp div#container div.actions button {
 }
 
 div.loginApp div#container input {
+  margin: 4px 0;
   margin-left: 10px;
   width: calc(100% - 10px);
-  margin-bottom: 5px;
 }
 
 @keyframes move-banner {

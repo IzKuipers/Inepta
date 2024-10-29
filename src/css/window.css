@@ -3,10 +3,10 @@
 
 div.window {
   position: fixed;
+  background-color: var(--button-semitransparent-bg);
 }
 
 div.window:not(.core) {
-  background-color: var(--bg);
   border: var(--border);
   outline: var(--secondary-border) !important;
   color: var(--fg);
@@ -19,6 +19,7 @@ div.window:not(.core) {
   scale: 0.95;
   opacity: 0;
   transform-origin: center center !important;
+  backdrop-filter: blur(5px);
 }
 
 div.window.closing {

@@ -134,10 +134,10 @@ export default class NapkinProcess extends AppProcess {
 
       this.fs.writeFile(file, this.textarea.value, this.userId);
       this.modified = false;
-    } catch {
+    } catch (e) {
       MessageBox({
         title: "Can't save file",
-        message: e,
+        message: e.message,
         buttons: [{ caption: "Okay", action: () => {} }],
         icon: MessageIcons.warning,
       });

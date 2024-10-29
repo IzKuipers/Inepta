@@ -8,6 +8,7 @@ div.context-menu {
   background-color: var(--bg);
   min-width: 180px;
   border-radius: 3px;
+  box-shadow: 0 5px 20px 5px #0003;
 }
 
 div.context-menu button {

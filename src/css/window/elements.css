@@ -3,6 +3,7 @@
 @import url("./elements/input.css");
 @import url("./elements/code.css");
 @import url("./elements/progressbar.css");
+@import url("./elements/scrollbar.css");
 
 div.window:not(.core) > div.body *:disabled {
   opacity: 0.5;

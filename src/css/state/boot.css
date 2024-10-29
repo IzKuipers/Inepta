@@ -11,6 +11,15 @@
   height: 150px;
 }
 
+.boot-screen div.progress-bar {
+  border: none !important;
+}
+
+.boot-screen div.progress-bar div.inner {
+  height: inherit;
+  background-color: var(--accent-light);
+}
+
 .boot-screen div.progress-bar.indeterminate div.inner {
   animation-duration: 2s;
 }

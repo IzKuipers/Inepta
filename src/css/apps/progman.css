@@ -6,11 +6,11 @@ div.window.progMan div.toolbar {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border-bottom: var(--border);
   height: 50px;
 }
 
 div.window.progMan div.content {
+  border-top: var(--border);
   height: calc(100% - 50px - 25px);
   overflow-x: auto;
 }

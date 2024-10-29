@@ -5,6 +5,18 @@
   background-position: center;
 }
 
+.login::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0005;
+  backdrop-filter: blur(20px);
+  z-index: -1;
+}
+
 .login #versionNumber {
   margin: 5px;
   font-family: "unifont";

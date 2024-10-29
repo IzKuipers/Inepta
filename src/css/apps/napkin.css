@@ -14,7 +14,6 @@ div.window.napkin textarea {
   padding: 5px;
   border: none;
   border-top: var(--border);
-  border-bottom: var(--border);
   background-color: var(--bg);
   color: var(--fg);
   font-family: "Source Code Pro";

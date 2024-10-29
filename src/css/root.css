@@ -4,7 +4,7 @@
   --shell-bg: #222d;
   --fg: #fff;
   --fg-secondary: #ddd;
-  --border-clr: #666;
+  --border-clr: #555;
   --border: var(--border-clr) 1px solid;
   --border-accent: var(--accent) 1px solid;
   --border-accent-dark: var(--accent-darker) 1px solid;
@@ -17,6 +17,7 @@
   --accent-darker: #9c3c00;
   --accent-superdark: #3b2619;
   --accent-light: #ff9553;
+  --button-semitransparent-bg: #333d;
   --button-bg: #333;
   --button-hover-bg: #444;
   --button-active-bg: #111;
@@ -38,6 +39,7 @@
   --accent-dark: #ff7f2f;
   --accent-darker: #b85b21;
   --accent-light: #ffc5a1;
+  --button-semitransparent-bg: #eeeeeeaa;
   --button-bg: #eeeeee;
   --button-hover-bg: #dddddd;
   --button-active-bg: #dfdfdf;
