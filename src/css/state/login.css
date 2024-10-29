@@ -16,9 +16,3 @@
   backdrop-filter: blur(20px);
   z-index: -1;
 }
-
-.login #versionNumber {
-  margin: 5px;
-  font-family: "unifont";
-  font-size: 16px;
-}

@@ -9,14 +9,20 @@ div#startMenu {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
-  display: none;
+  display: block;
   z-index: 100000000000000000;
   border: var(--border);
-  border-bottom: none;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 20px;
+  pointer-events: none;
+  transition: opacity 0.3s, translate 0.3s, visibility 0.3s;
 }
 
 div#startMenu.opened {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  translate: 0;
 }
 
 div#startMenu div.top {
