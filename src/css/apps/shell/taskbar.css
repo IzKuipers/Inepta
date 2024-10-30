@@ -53,6 +53,7 @@ div.window.shell div.taskbar #activeApps button:active {
 
 div.window.shell div.taskbar #activeApps button.focused {
   background-color: var(--shell-bg);
+  outline: var(--border) !important;
 }
 
 div.window.shell div.taskbar #activeApps button.closing {

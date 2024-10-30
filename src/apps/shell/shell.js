@@ -133,7 +133,11 @@ export default class ShellProcess extends AppProcess {
 
     this.appList.innerHTML = "";
 
-    for (const [id, app] of Object.entries(apps)) {
+    for (const [id, app] of [
+      ...Object.entries(apps),
+      ...Object.entries(apps),
+      ...Object.entries(apps),
+    ]) {
       if (!app || !app.data || app.data.hidden || app.data.core) continue;
 
       const button = document.createElement("button");
