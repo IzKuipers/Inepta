@@ -49,6 +49,14 @@ div#startMenu div.right button {
   font-size: 16px;
 }
 
+div#startMenu div.right button:hover {
+  color: var(--accent-light);
+}
+
+div#startMenu div.right button:active {
+  color: var(--accent-dark);
+}
+
 div#startMenu div.right {
   height: 40px;
   border-left: var(--border);

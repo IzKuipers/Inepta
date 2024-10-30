@@ -40,9 +40,4 @@ export default async function render() {
       }
     }
   });
-
-  window.spawnApp = spawnApp;
-  window.loadApp = loadApp;
-  window.userData = UserData;
-  window.logStore = LogStore;
 }

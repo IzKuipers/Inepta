@@ -6,6 +6,5 @@ export let KERNEL; // Global variable set by IneptaKernel
 
 // Function to set the KERNEL global variable
 export function setKernel(kernel) {
-  window.kernel = kernel;
   KERNEL = kernel;
 }

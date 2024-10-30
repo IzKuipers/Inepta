@@ -1,5 +1,6 @@
 import { CloneModule } from "../../clone/index.js";
 import { ToolbarModule } from "../../electron/toolbar.js";
+import { ElevationModule } from "../../elevation/index.js";
 import { Environment } from "../../environment/index.js";
 import { FileSystemSecurity } from "../../fssec/index.js";
 import { PowerLogic } from "../../power/index.js";
@@ -13,6 +14,7 @@ export const CoreKernelModules = {
   fs: FileSystem,
   registry: IneptaRegistry,
   userlogic: UserLogic,
+  elevation: ElevationModule,
   fssec: FileSystemSecurity,
   clone: CloneModule,
   powerlogic: PowerLogic,

@@ -18,8 +18,8 @@ export class ToolbarModule extends KernelModule {
   _init() {
     this.createToolbar();
     this.fullscreenListener();
-    this.powerLogic = kernel.getModule("powerlogic");
-    this.state = kernel.state;
+    this.powerLogic = this._kernel.getModule("powerlogic");
+    this.state = this._kernel.state;
   }
 
   createToolbar() {
@@ -182,7 +182,10 @@ export class ToolbarModule extends KernelModule {
   }
 
   close() {
-    if (kernel.state.currentState === "desktop" || kernel.state.currentState === "login")
+    if (
+      this._kernel.state.currentState === "desktop" ||
+      this._kernel.state.currentState === "login"
+    )
       this.powerLogic.shutdown();
     else window.close();
   }

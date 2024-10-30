@@ -24,7 +24,7 @@ export const DebugToolApp = {
     css: "./css/apps/debugtool.css",
     html: "./apps/debugtool/debugtool.html",
   },
-  hidden: false,
+  hidden: true,
   core: false,
   id: "debugTool",
 };
