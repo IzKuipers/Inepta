@@ -1,8 +1,6 @@
 import { VERSION } from "../../env.js";
-import { SecurityLevel } from "../fssec/store.js";
 import { KernelModule } from "../kernel/module/index.js";
 import { Log, LogStore, LogType } from "../logging.js";
-import { Sleep } from "../sleep.js";
 
 const { glob } = require("glob");
 const { readFile } = require("fs/promises");
@@ -18,7 +16,6 @@ export class CloneModule extends KernelModule {
     super(kernel, id);
 
     this.fs = kernel.getModule("fs");
-    this.fssec = kernel.getModule("fssec");
   }
 
   async _init() {
@@ -73,31 +70,6 @@ export class CloneModule extends KernelModule {
 
         cb(`${path} (FAILED)`);
       }
-    }
-
-    cb(`Applying permissions...`);
-
-    await Sleep(1000);
-
-    for (const path of this.paths) {
-      if (this.IGNORE_LIST.includes(path)) {
-        Log("CloneModule.doClone", `IGNORED: ${path}`, LogType.warning);
-
-        cb(`${path} (IGNORED)`);
-
-        continue;
-      }
-
-      cb(`${path} (FSSEC)`);
-
-      this.fssec.createSecurityNode(`System/${path}`, {
-        readRequirement: SecurityLevel.user,
-        writeRequirement: SecurityLevel.admin,
-        readAllow: ["SYSTEM"],
-        writeAllow: ["SYSTEM"],
-      });
-
-      await Sleep(1);
     }
 
     const logs = {};

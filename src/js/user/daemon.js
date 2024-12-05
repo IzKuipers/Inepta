@@ -1,13 +1,12 @@
 import { KERNEL } from "../../env.js";
+import { loadBuiltinApps } from "../apps/builtin.js";
+import { MessageBox } from "../desktop/message.js";
+import { MessageIcons } from "../images/msgbox.js";
 import { Process } from "../process/instance.js";
 import { RegistryHives } from "../registry/store.js";
 import { getAccentColorVariations } from "../ui/color.js";
 import { UserData } from "./data.js";
 import { DefaultUserPreferences } from "./store.js";
-import { loadBuiltinApps } from "../apps/builtin.js";
-import { SecurityLevel } from "../fssec/store.js";
-import { MessageBox } from "../desktop/message.js";
-import { MessageIcons } from "../images/msgbox.js";
 
 export class UserDaemon extends Process {
   preferencesPath = "";
@@ -47,29 +46,6 @@ export class UserDaemon extends Process {
     this.environment.setProperty("useruuid", this.user.uuid);
     this.environment.setProperty("preferences", this.preferencesPath);
     this.environment.setProperty("userprofile", this.user.userFolder);
-
-    const securityNode = {
-      path: this.preferencesPath,
-      readProhibit: [],
-      readAllow: [this.user.uuid],
-      writeProhibit: [],
-      writeAllow: [this.user.uuid],
-      readRequirement: SecurityLevel.system,
-      writeRequirement: SecurityLevel.system,
-    };
-
-    if (this.user.uuid !== "SYSTEM") {
-      this.fs.fssec.setSecurityNode(this.user.userFolder, securityNode);
-    } else {
-      setTimeout(() => {
-        MessageBox({
-          title: "Security Node Failed",
-          message: `Invalid operation: FSSec.setSecurityNode::SYSTEM`,
-          buttons: [{ caption: "Okay", action: () => {} }],
-          icon: MessageIcons.critical,
-        });
-      }, 1000);
-    }
 
     // Load all built-in applications
     await loadBuiltinApps(this.user.uuid);

@@ -9,9 +9,8 @@
  *   23-Oct-2024, 8:13 PM
  */
 
-import { SecurityLevel } from "./fssec/store.js";
 import { KernelModule } from "./kernel/module/index.js";
-import { Log, LogType } from "./logging.js";
+import { Log } from "./logging.js";
 
 const fs = require("fs");
 const path = require("path/posix");
@@ -21,8 +20,6 @@ export class FileSystem extends KernelModule {
   root;
   constructor(kernel, id) {
     super(kernel, id);
-
-    this.fssec = this._kernel.getModule("fssec");
   }
 
   // Called by kernel to initialize the filesystem
@@ -75,10 +72,8 @@ export class FileSystem extends KernelModule {
   }
 
   // Writes data to a file, creating the file and directories if necessary.
-  writeFile(pathStr, content, userId) {
+  writeFile(pathStr, content) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
-
-    this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     const dirPath = path.dirname(fullPath); // Get the directory part of the full path.
@@ -90,10 +85,8 @@ export class FileSystem extends KernelModule {
   }
 
   // Reads data from a file.
-  readFile(pathStr, userId) {
+  readFile(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
-
-    this.canRead(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
 
@@ -105,10 +98,8 @@ export class FileSystem extends KernelModule {
   }
 
   // Deletes a file from the file system.
-  deleteFile(pathStr, userId) {
+  deleteFile(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
-
-    this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
 
@@ -128,10 +119,8 @@ export class FileSystem extends KernelModule {
   }
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
-  readDirectory(pathStr, userId) {
+  readDirectory(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
-
-    this.canRead(pathStr, userId);
 
     // If the user tries to break out of the filesystem bounds, don't let them.
     if (pathStr.includes("..")) throw new Error(`Directory ${pathStr} does not exist.`);
@@ -162,10 +151,8 @@ export class FileSystem extends KernelModule {
   }
 
   // Deletes a directory and its contents recursively.
-  deleteDirectory(pathStr, userId) {
+  deleteDirectory(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
-
-    this.canWrite(pathStr, userId);
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
 
@@ -213,62 +200,6 @@ export class FileSystem extends KernelModule {
 
     const newPath = split.join("/"); // Join the remaining parts back into a path.
     return newPath; // Return the parent directory path.
-  }
-
-  // Function to verify that the user is allowed to read an item
-  canRead(path, userId) {
-    path = path.replaceAll("\\", "/").replace("./", "");
-
-    if (this.fsSecLoaded && !this.fssec) {
-      throw new Error(`FSSec disappeared. Please restart.`);
-    }
-
-    if (!this.fssec) {
-      // No FSSec? Then everything is allowed.
-      Log(
-        "FileSystem.canRead",
-        `FSSec isn't loaded! Allowing everything for ${path}`,
-        LogType.warning
-      );
-
-      return true;
-    } else {
-      this.fsSecLoaded = true;
-    }
-
-    // Get the security level of the user, default to System
-    const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
-    // Check if the user can read the item
-    const canRead = this.fssec.canReadItem(path, securityLevel, userId);
-
-    // No permission? throw an error.
-    if (!canRead) throw new Error(`Access denied: "READ" not allowed on ${path}`);
-  }
-
-  // Function to verify that the user is allowed to write an item
-  canWrite(path, userId) {
-    path = path.replaceAll("\\", "/").replace("./", "");
-
-    if (!this.fssec) {
-      // No FSSec? Then everything is allowed.
-      Log(
-        "FileSystem.canWrite",
-        `FSSec isn't loaded! Allowing everything for ${path}`,
-        LogType.warning
-      );
-
-      return true;
-    } else {
-      this.fsSecLoaded = true;
-    }
-
-    // Get the security level of the user, default to System
-    const securityLevel = userId ? this.fssec.determineSecurityLevel(userId) : SecurityLevel.system;
-    // Check if the user can write the item
-    const canWrite = this.fssec.canWriteItem(path, securityLevel, userId);
-
-    // No permission? throw an error.
-    if (!canWrite) throw new Error(`Access denied: "WRITE" not allowed on ${path}`);
   }
 
   getAllPaths(pathStr = "/", userId) {

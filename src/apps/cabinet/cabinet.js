@@ -3,7 +3,6 @@ import { spawnApp } from "../../js/apps/spawn.js";
 import { strftime } from "../../js/desktop/date.js";
 import { MessageBox } from "../../js/desktop/message.js";
 import { MessageIcons } from "../../js/images/msgbox.js";
-import { Sleep } from "../../js/sleep.js";
 import { Store } from "../../js/store.js";
 import { formatBytes } from "../../js/util/bytes.js";
 
@@ -72,32 +71,12 @@ export default class CabinetProcess extends AppProcess {
       this.path = path;
       this.contents = contents;
     } catch (e) {
-      if (e.message.includes("denied")) {
-        MessageBox({
-          title: "Access Denied",
-          message:
-            "You don't have access to this folder. You can choose to add yourself to the Security Node to gain access anyway.",
-          buttons: [
-            {
-              caption: "Gain Access",
-              action: async () => {
-                this.fs.fssec.allowReadFor(this.userId, path);
-                await Sleep(0);
-                this.goHere(path);
-              },
-            },
-            { caption: "Okay", action: () => {} },
-          ],
-          icon: MessageIcons.warning,
-        });
-      } else {
-        MessageBox({
-          title: "Can't open directory",
-          message: `The specified directory could not be opened. Please check the name and try again.<br><br>${e.message}`,
-          buttons: [{ caption: "Okay", action() {} }],
-          icon: MessageIcons.critical,
-        });
-      }
+      MessageBox({
+        title: "Can't open directory",
+        message: `The specified directory could not be opened. Please check the name and try again.<br><br>${e.message}`,
+        buttons: [{ caption: "Okay", action() {} }],
+        icon: MessageIcons.critical,
+      });
     }
 
     this.updateStatusbar();

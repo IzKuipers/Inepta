@@ -1,4 +1,3 @@
-import { SecurityLevel } from "../fssec/store.js";
 import { KernelModule } from "../kernel/module/index.js";
 import { RegistryHives } from "../registry/store.js";
 import { DefaultUserData, DefaultUserPreferences } from "./store.js";
@@ -109,8 +108,6 @@ export class UserLogic extends KernelModule {
       readRequirement: SecurityLevel.system,
       writeRequirement: SecurityLevel.system,
     };
-
-    this.fs.fssec.setSecurityNode(user.userFolder, securityNode);
 
     await this.initializePreferences(user);
 
