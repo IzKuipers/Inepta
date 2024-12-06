@@ -8,6 +8,11 @@ div.window.wallpaper {
   animation-delay: 0.5s;
 }
 
+#appRenderer.no-anim div.window.wallpaper {
+  opacity: 1;
+  animation: none !important;
+}
+
 @keyframes appear {
   0% {
     opacity: 0;

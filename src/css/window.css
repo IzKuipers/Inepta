@@ -22,6 +22,15 @@ div.window:not(.core) {
   backdrop-filter: blur(5px);
 }
 
+#appRenderer.no-anim div.window:not(.core) {
+  opacity: 1 !important;
+  scale: 1 !important;
+  animation: none !important;
+}
+
+#appRenderer.no-anim div.window:not(.core).closing {
+  opacity: 0 !important;
+}
 div.window.closing {
   scale: 1;
   animation: hide 250ms forwards !important;

@@ -4,3 +4,12 @@
   --button-semitransparent-bg: var(--button-bg) !important;
   --shell-bg: var(--bg) !important;
 }
+
+#appRenderer.no-anim,
+#appRenderer.no-anim *,
+#appRenderer.no-anim::before,
+#appRenderer.no-anim::after,
+#appRenderer.no-anim *::before,
+#appRenderer.no-anim *::after {
+  transition: none !important;
+}
