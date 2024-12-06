@@ -1,0 +1,6 @@
+#appRenderer.no-blur,
+#appRenderer.no-blur * {
+  backdrop-filter: none !important;
+  --button-semitransparent-bg: var(--button-bg) !important;
+  --shell-bg: var(--bg) !important;
+}

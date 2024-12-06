@@ -39,6 +39,10 @@ export default class ShellProcess extends AppProcess {
     this.startMenu = this.getElement("#startMenu", true);
     this.appList = this.getElement("#appList", true);
 
+    if (this.userData.noBlur) {
+      this.handler.renderer.target.classList.add("no-blur");
+    }
+
     this.startActiveAppsPopulator();
     this.startOutsideTrigger();
     this.startClock();
