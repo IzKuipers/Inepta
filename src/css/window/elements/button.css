@@ -2,8 +2,8 @@ div.window:not(.core) > div.body button {
   border: none;
   background-color: var(--button-bg);
   padding: 0 15px;
-  border-radius: 6px;
-  height: 32px;
+  border-radius: 8px;
+  height: 36px;
 }
 
 div.window:not(.core) > div.body button:focus {

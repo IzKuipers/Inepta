@@ -11,9 +11,9 @@ div.window:not(.core) {
   outline: var(--secondary-border) !important;
   color: var(--fg);
   overflow: hidden;
-  border-radius: 10px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 12px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   animation: show 250ms forwards;
   box-shadow: 0 5px 20px 5px #0008;
   scale: 0.95;
@@ -47,7 +47,7 @@ div.window:not(.core).maximized {
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: calc(100% - 41px) !important;
+  height: calc(100% - 36px) !important;
   border: none !important;
   resize: none !important;
   max-height: unset !important;
@@ -63,7 +63,7 @@ div.window:not(.core).minimized {
 
 div.window:not(.core) div.body {
   padding: 15px;
-  height: calc(100% - 31px);
+  height: calc(100% - 36px);
   background-color: var(--bg);
 }
 
