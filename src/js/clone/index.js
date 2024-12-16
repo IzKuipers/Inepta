@@ -55,20 +55,20 @@ export class CloneModule extends KernelModule {
         if (this.IGNORE_LIST.includes(path)) {
           Log("CloneModule.doClone", `IGNORED: ${path}`, LogType.warning);
 
-          cb(`${path} (IGNORED)`);
+          await cb(`${path} (IGNORED)`);
 
           continue;
         }
 
         this.fs.writeFile(`System/${path}`, await readFile(path), "SYSTEM");
 
-        cb(path);
+        await cb(path);
       } catch {
         Log("CloneModule.doClone", `FAILURE: ${path}`, LogType.error);
 
         this.IGNORE_LIST.push(path);
 
-        cb(`${path} (FAILED)`);
+        await cb(`${path} (FAILED)`);
       }
     }
 

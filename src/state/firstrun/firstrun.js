@@ -14,12 +14,18 @@ export default async function render() {
 
   async function displayStatus(status, className) {
     const interTime = statusText.innerText ? 700 : 0;
+
     statusText.classList.add("hidden");
+
     await Sleep(850);
+
     statusText.classList.add(className);
     statusText.innerText = status;
+
     await Sleep(interTime);
+
     statusText.classList.remove("hidden");
+
     await Sleep(2000);
   }
 
@@ -31,14 +37,17 @@ export default async function render() {
   circlesDiv.classList.add("visible");
   progressText.innerHTML = "Deploying filesystem &mdash; 0% Complete";
 
-  const itemLength = clone.paths.length * 2;
+  const itemLength = clone.paths.length;
   let doneItems = 0;
 
-  await clone.doClone(() => {
+  await clone.doClone(async () => {
+    const percentage = Math.floor((100 / itemLength) * doneItems);
+
     doneItems++;
-    progressText.innerHTML = `Deploying filesystem &mdash; ${Math.floor(
-      (100 / itemLength) * doneItems
-    )}% complete`;
+
+    progressText.innerHTML = `Deploying filesystem &mdash; ${percentage}% complete`;
+
+    await Sleep(10);
   });
 
   circlesDiv.classList.remove("visible");

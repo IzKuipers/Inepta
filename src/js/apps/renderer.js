@@ -327,8 +327,8 @@ export class AppRenderer extends Process {
     if (data.controls.minimize) {
       const minimize = document.createElement("button");
 
-      minimize.className = "minimize material-symbols-outlined";
-      minimize.innerText = "keyboard_arrow_down";
+      minimize.className = "minimize icon-chevron-down";
+      // minimize.innerText = "chevron_down";
       minimize.addEventListener("click", () => this.toggleMinimize(process._pid));
 
       controls.append(minimize);
@@ -338,8 +338,8 @@ export class AppRenderer extends Process {
     if (data.controls.maximize) {
       const maximize = document.createElement("button");
 
-      maximize.className = "maximize material-symbols-outlined";
-      maximize.innerText = "keyboard_arrow_up";
+      maximize.className = "maximize icon-chevron-up";
+      // maximize.innerText = "chevron_up";
       maximize.addEventListener("click", () => this.toggleMaximize(process._pid));
 
       controls.append(maximize);
@@ -349,8 +349,8 @@ export class AppRenderer extends Process {
     if (data.controls.close) {
       const close = document.createElement("button");
 
-      close.className = "close material-symbols-outlined";
-      close.innerText = "close";
+      close.className = "close icon-x";
+      // close.innerText = "";
       close.addEventListener("click", async () => {
         process.closeWindow();
       });

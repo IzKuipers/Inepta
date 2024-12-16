@@ -4,7 +4,7 @@ div.window.cabinet div.top {
   padding: 10px;
 }
 
-div.window.cabinet div.top button.material-symbols-outlined {
+div.window.cabinet div.top button.lucide {
   padding: 0;
   width: 30px;
   height: 30px;
@@ -13,11 +13,11 @@ div.window.cabinet div.top button.material-symbols-outlined {
   background-color: transparent;
 }
 
-div.window.cabinet div.top button.material-symbols-outlined:hover {
+div.window.cabinet div.top button.lucide:hover {
   background-color: var(--button-bg);
 }
 
-div.window.cabinet div.top button.material-symbols-outlined:active {
+div.window.cabinet div.top button.lucide:active {
   background-color: var(--button-active-bg);
 }
 
@@ -46,6 +46,6 @@ div.window.cabinet div.address-bar-wrapper #goButton {
   line-height: 16px;
 }
 
-div.window.cabinet div.address-bar-wrapper #goButton > span.material-symbols-outlined {
+div.window.cabinet div.address-bar-wrapper #goButton > span.lucide {
   font-size: 16px;
 }

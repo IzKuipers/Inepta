@@ -47,20 +47,16 @@ export class ToolbarModule extends KernelModule {
 
     this.assignHoverEvents(trigger, toolbar);
 
-    devtoolsToggle.className = "devtools-toggle material-symbols-outlined";
-    devtoolsToggle.innerText = "bug_report";
+    devtoolsToggle.className = "devtools-toggle lucide icon-bug";
     devtoolsToggle.addEventListener("click", () => this.toggleDevTools());
 
-    minimizeButton.innerText = "minimize";
-    minimizeButton.className = "minimize material-symbols-outlined";
+    minimizeButton.className = "minimize lucide icon-chevron-down";
     minimizeButton.addEventListener("click", () => this.minimize());
 
-    maximizeButton.className = "maximize material-symbols-outlined";
-    maximizeButton.innerText = "fullscreen_exit";
+    maximizeButton.className = "maximize lucide icon-minimize";
     maximizeButton.addEventListener("click", () => this.toggleFullscreen());
 
-    closeButton.className = "close material-symbols-outlined";
-    closeButton.innerText = "close";
+    closeButton.className = "close lucide icon-x";
     closeButton.addEventListener("click", () => this.close());
 
     controlsWrapper.append(minimizeButton, maximizeButton, closeButton);
