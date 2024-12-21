@@ -4,7 +4,7 @@ div.window div.titlebar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5px;
+  padding: 0 8px;
   background-color: transparent;
   position: relative;
   border-bottom: var(--button-active-bg) 1px solid;
@@ -35,7 +35,7 @@ div.window div.titlebar div.window-title {
   gap: 8px;
   justify-content: center;
   pointer-events: none;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 div.window div.titlebar div.window-title > * {

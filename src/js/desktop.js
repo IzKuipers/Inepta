@@ -1,5 +1,7 @@
 import { loadApp } from "./apps/load.js";
 import { spawnApp } from "./apps/spawn.js";
+import { AppStore } from "./apps/store.js";
+import { LoginApp } from "../apps/loginapp/metadata.js";
 import { LogStore } from "./logging.js";
 import { Sleep } from "./sleep.js";
 import { StateError } from "./state/error.js";
@@ -40,4 +42,10 @@ export default async function render() {
       }
     }
   });
+
+  window.spawnApp = spawnApp;
+  window.loadApp = loadApp;
+  window.apps = AppStore;
+  window.loginApp = LoginApp;
+  window.logs = LogStore;
 }

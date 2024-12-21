@@ -26,12 +26,15 @@ export default class LoginAppProcess extends AppProcess {
   userlogic;
   type;
 
-  constructor(handler, pid, parentPid, app, type) {
+  forceLaunch = false;
+
+  constructor(handler, pid, parentPid, app, type, forceLaunch = false) {
     super(handler, pid, parentPid, app);
 
     this.kernel = this.handler._kernel;
     this.powerLogic = this.kernel.getModule("powerlogic");
     this.type = type;
+    this.forceLaunch = forceLaunch;
   }
 
   async render() {
@@ -42,7 +45,7 @@ export default class LoginAppProcess extends AppProcess {
     const stateHandler = this.kernel.getModule("state");
     const { currentState } = stateHandler;
 
-    if (currentState !== "login") {
+    if (currentState !== "login" && !this.forceLaunch) {
       throw new AppRuntimeError(`Can't launch LoginApp: invalid context`);
     }
 

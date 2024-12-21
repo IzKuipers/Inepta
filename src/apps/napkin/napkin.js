@@ -1,3 +1,4 @@
+import { AppRuntimeError } from "../../js/apps/error.js";
 import { AppProcess } from "../../js/apps/process.js";
 import { MessageBox } from "../../js/desktop/message.js";
 import { MessageIcons } from "../../js/images/msgbox.js";
@@ -50,6 +51,10 @@ export default class NapkinProcess extends AppProcess {
           this.closeWindow();
         }),
       },
+    ]);
+
+    this.clickMenu(this.aboutMenu, () => [
+      { caption: "About Napkin", action: this.safe(() => this.about()) },
     ]);
 
     this.file.subscribe((v) => {
@@ -147,5 +152,9 @@ export default class NapkinProcess extends AppProcess {
   saveAs() {
     // TODO: file transfer dialog, load/save dialog
     throw new Error("Not implemented!");
+  }
+
+  about() {
+    throw new AppRuntimeError("Not implemented: ABOUT");
   }
 }

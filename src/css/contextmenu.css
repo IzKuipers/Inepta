@@ -5,7 +5,8 @@ div.context-menu {
   z-index: 1000000000000000000000000000000000000000000000000;
   padding: 3px;
   border: var(--border);
-  background-color: var(--bg);
+  background-color: var(--shell-bg);
+  backdrop-filter: blur(15px);
   min-width: 180px;
   border-radius: 3px;
   box-shadow: 0 5px 20px 5px #0003;
