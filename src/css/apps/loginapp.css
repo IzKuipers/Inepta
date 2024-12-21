@@ -14,7 +14,7 @@ div.loginApp div#banner {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   background-color: var(--button-active-bg);
   border-bottom: var(--accent-darker) 3px solid;
   position: relative;
@@ -44,7 +44,7 @@ div.loginApp div#banner div.name {
 }
 
 div.loginApp div#banner img {
-  height: 48px;
+  height: 64px;
 }
 
 div.loginApp div#banner h1 {
