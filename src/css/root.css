@@ -47,6 +47,6 @@
 }
 
 ::selection {
-  background: var(--accent) !important;
+  background: var(--accent-light) !important;
   color: var(--accent-superdark);
 }

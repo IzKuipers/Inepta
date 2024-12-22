@@ -41,6 +41,7 @@ div.window.newLoginApp div.body div#container div.left {
 div.window.newLoginApp div.body div#container div.field {
   display: flex;
   align-items: center;
+  backdrop-filter: blur(60px);
 }
 
 div.window.newLoginApp div.body div#container div.icon {

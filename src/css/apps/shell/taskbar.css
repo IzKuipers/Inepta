@@ -1,6 +1,6 @@
 div.window.shell div.taskbar {
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   left: 10px;
   width: calc(100% - 20px);
   height: 52px;
@@ -8,11 +8,29 @@ div.window.shell div.taskbar {
   backdrop-filter: blur(10px);
   border: var(--border-clr) 1px solid;
   border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
   display: flex;
   align-items: center;
   gap: 0;
   z-index: 100000000000000000;
   overflow: hidden;
+  translate: 0 40px;
+  transition: translate 0.3s;
+}
+
+div.window.shell div.taskbar > * {
+  transition: opacity 0.3s;
+}
+
+div.window.shell div.taskbar:not(:hover) > * {
+  pointer-events: none;
+  opacity: 0;
+}
+
+div.window.shell div.taskbar:hover {
+  translate: 0 0;
 }
 
 div.window.shell div.taskbar #activeApps {

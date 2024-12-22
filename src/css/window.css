@@ -48,7 +48,7 @@ div.window:not(.core).maximized {
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: calc(100% - 36px) !important;
+  height: calc(100% - 26px) !important;
   border: none !important;
   resize: none !important;
   max-height: unset !important;
