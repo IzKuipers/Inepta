@@ -31,6 +31,7 @@ div.window:not(.core) {
 #appRenderer.no-anim div.window:not(.core).closing {
   opacity: 0 !important;
 }
+
 div.window.closing {
   scale: 1;
   animation: hide 250ms forwards !important;

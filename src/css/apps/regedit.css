@@ -43,6 +43,10 @@ div.window.regEditApp div.panes > div.right-pane {
   overflow-x: auto;
 }
 
+div.window.regEditApp div.branch {
+  position: relative;
+}
+
 div.window.regEditApp div.branch:not(.expanded) > div.indent {
   display: none;
 }
@@ -58,6 +62,18 @@ div.window.regEditApp div.panes > #directoryView div.indent {
   border-left: var(--border);
   min-width: fit-content;
   margin-right: 5px;
+  position: relative;
+}
+
+div.window.regEditApp div.branch.expanded:has(div.indent > div)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 13px;
+  width: 2px;
+  height: 11px;
+  background-color: var(--bg);
+  pointer-events: none;
 }
 
 div.window.regEditApp div.panes > #directoryView button.expander {

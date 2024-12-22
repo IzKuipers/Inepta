@@ -18,10 +18,13 @@ import { AppIcons } from "../images/apps.js";
 import { MessageIcons } from "../images/msgbox.js";
 import { Draggable } from "../neodrag.js";
 import { Process } from "../process/instance.js";
+import { RegistryHives } from "../registry/store.js";
 import { Sleep } from "../sleep.js";
 import { Store } from "../store.js";
 import { htmlspecialchars } from "../util.js";
 import { AppRendererError } from "./error.js";
+
+const { randomUUID } = require("crypto");
 
 export class AppRenderer extends Process {
   currentState = [];
@@ -161,26 +164,7 @@ export class AppRenderer extends Process {
       // Only show the error message if the app isn't disposed
       if (!process._disposed) {
         // The HTML of the error message
-        const lines = [
-          `<b><code>${data.id}::'${data.metadata.name}'</code> (PID ${process._pid}) has encountered a problem and needs to close. I am sorry for the inconvenience.</b>`,
-          `If you were in the middle of something, the information you were working on might be lost. You can choose to view the call stack, which may contain the reason for the crash.`,
-          `<details><summary>Show call stack</summary><pre>${htmlspecialchars(
-            e.stack.replaceAll(location.href, "")
-          )}</pre></details>`,
-        ];
-
-        // Show the error message. The options here should be self explanatory.
-        MessageBox({
-          title: `${data.metadata.name} - Application Error`,
-          message: lines.join("<br><br>"),
-          buttons: [
-            {
-              caption: "Okay",
-              action() {},
-            },
-          ],
-          icon: MessageIcons.critical,
-        });
+        this.notifyCrash(data, e);
       }
 
       await Sleep(0); // Wait for the next frame
@@ -493,5 +477,49 @@ export class AppRenderer extends Process {
 
     // Return the result
     return result;
+  }
+
+  notifyCrash(data, e) {
+    const lines = [
+      `<b><code>${data.id}::'${data.metadata.name}'</code> (PID ${process._pid}) has encountered a problem and needs to close. I am sorry for the inconvenience.</b>`,
+      `If you were in the middle of something, the information you were working on might be lost. You can choose to view the call stack, which may contain the reason for the crash.`,
+      `<details><summary>Show call stack</summary><pre>${htmlspecialchars(
+        e.stack.replaceAll(location.href, "")
+      )}</pre></details>`,
+    ];
+
+    const uuid = randomUUID();
+
+    const crashReport = {
+      appId: data.id,
+      appName: data.metadata.name,
+      pid: process._pid,
+      stack: htmlspecialchars(e.stack.replaceAll(location.href, "")),
+      timestamp: Date.now(),
+      event: {
+        name: e.name,
+        message: e.message,
+        stack: e.stack,
+      },
+      appData: data,
+      crashId: uuid,
+    };
+
+    console.log(crashReport);
+
+    this.registry.setValue(RegistryHives.local, `renderer.Crashes.${uuid}`, crashReport);
+
+    // Show the error message. The options here should be self explanatory.
+    MessageBox({
+      title: `${data.metadata.name} - Application Error`,
+      message: lines.join("<br><br>"),
+      buttons: [
+        {
+          caption: "Okay",
+          action() {},
+        },
+      ],
+      icon: MessageIcons.critical,
+    });
   }
 }

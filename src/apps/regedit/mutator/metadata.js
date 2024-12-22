@@ -6,9 +6,9 @@ const RegEditMutatorApp = {
     author: "Izaak Kuipers",
     icon: "./assets/apps/regedit.svg",
   },
-  size: { w: 350, h: 200 },
-  minSize: { w: 350, h: 200 },
-  maxSize: { w: 350, h: 200 },
+  size: { w: 400, h: NaN },
+  minSize: { w: 400, h: 200 },
+  maxSize: { w: 400, h: NaN },
   position: { centered: true },
   state: {
     resizable: false,

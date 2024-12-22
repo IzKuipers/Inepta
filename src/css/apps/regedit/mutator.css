@@ -1,7 +1,13 @@
+div.window.regEditMutatorApp {
+  min-height: fit-content !important;
+  height: fit-content !important;
+}
+
 div.window.regEditMutatorApp div.body {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: space-between;
+  min-height: fit-content !important;
 }
 
 div.window.regEditMutatorApp table {
@@ -10,14 +16,16 @@ div.window.regEditMutatorApp table {
 
 div.window.regEditMutatorApp td {
   padding-bottom: 5px;
+  vertical-align: top;
 }
 
 div.window.regEditMutatorApp tr td:first-child {
+  padding: 5px 0;
   padding-right: 20px;
 }
 
 div.window.regEditMutatorApp input {
-  width: 250px;
+  width: 300px;
 }
 
 div.window.regEditMutatorApp div.body div.actions {
@@ -25,4 +33,13 @@ div.window.regEditMutatorApp div.body div.actions {
   align-items: center;
   gap: 10px;
   justify-content: end;
+  margin-top: 10px;
+}
+
+div.window.regEditMutatorApp textarea {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  height: 200px;
+  min-height: 200px;
 }

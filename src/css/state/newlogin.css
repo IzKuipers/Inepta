@@ -1,0 +1,17 @@
+.login {
+  background-color: var(--accent-darker);
+  background-image: url("../../assets/bg/login.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* .login::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0008;
+} */
