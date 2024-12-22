@@ -23,6 +23,9 @@ import { Sleep } from "../sleep.js";
 import { Store } from "../store.js";
 import { htmlspecialchars } from "../util.js";
 import { AppRendererError } from "./error.js";
+import { IneptaKernel } from "../kernel/index.js";
+import { KernelModule } from "../kernel/module/index.js";
+import { ProcessDispatch } from "../process/dispatch.js";
 
 const { randomUUID } = require("crypto");
 
@@ -164,7 +167,7 @@ export class AppRenderer extends Process {
       // Only show the error message if the app isn't disposed
       if (!process._disposed) {
         // The HTML of the error message
-        this.notifyCrash(data, e);
+        this.notifyCrash(data, e, process);
       }
 
       await Sleep(0); // Wait for the next frame
@@ -479,7 +482,7 @@ export class AppRenderer extends Process {
     return result;
   }
 
-  notifyCrash(data, e) {
+  notifyCrash(data, e, process) {
     const lines = [
       `<b><code>${data.id}::'${data.metadata.name}'</code> (PID ${process._pid}) has encountered a problem and needs to close. I am sorry for the inconvenience.</b>`,
       `If you were in the middle of something, the information you were working on might be lost. You can choose to view the call stack, which may contain the reason for the crash.`,
@@ -489,6 +492,22 @@ export class AppRenderer extends Process {
     ];
 
     const uuid = randomUUID();
+
+    const filteredProcess = Object.fromEntries(
+      Object.entries(process).map(([k, v]) => {
+        if (
+          this.kernel.getModule(k) ||
+          v instanceof Process ||
+          v instanceof IneptaKernel ||
+          v instanceof KernelModule ||
+          v instanceof ProcessDispatch
+        ) {
+          return [k, undefined];
+        }
+
+        return [k, v];
+      })
+    );
 
     const crashReport = {
       appId: data.id,
@@ -503,6 +522,7 @@ export class AppRenderer extends Process {
       },
       appData: data,
       crashId: uuid,
+      process: filteredProcess,
     };
 
     console.log(crashReport);

@@ -8,11 +8,12 @@ div.window.napkin > div.body div.alt-bar,
 div.window.napkin > div.body div.status-bar {
   height: 25px;
 }
-div.window.napkin textarea {
+div.window.napkin > div.body textarea {
   width: 100%;
   height: calc(100% - 50px);
   padding: 5px;
   border: none;
+  border-radius: 0;
   border-top: var(--border);
   background-color: var(--bg);
   color: var(--fg);

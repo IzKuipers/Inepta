@@ -158,6 +158,8 @@ export default class RegEditProcess extends AppProcess {
       const nameCaption = document.createElement("span");
       const icon = document.createElement("img");
 
+      const stringified = JSON.stringify(element);
+
       icon.src = FILE_ICONS[Array.isArray(element) ? "array" : typeof element];
       nameCaption.innerText = key;
       nameWrapper.append(icon, nameCaption);
@@ -170,7 +172,7 @@ export default class RegEditProcess extends AppProcess {
       type.className = "type";
 
       value.innerText = isFolder ? "(folder)" : JSON.stringify(element);
-      valuelength.innerText = `${JSON.stringify(element).length} bytes`;
+      valuelength.innerText = `${stringified ? stringified.length : 0} bytes`;
       type.innerText = `REG_${Array.isArray(element) ? "ARRAY" : (typeof element).toUpperCase()}`;
 
       row.addEventListener(

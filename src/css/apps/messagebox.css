@@ -1,6 +1,12 @@
 div.window.msgBox {
   width: fit-content !important;
 }
+
+div.window.msgBox:not(.show-error) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 div.window.msgBox div.body div.top {
   display: flex;
   align-items: start;

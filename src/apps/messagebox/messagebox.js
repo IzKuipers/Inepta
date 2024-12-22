@@ -1,5 +1,6 @@
 import { AppRuntimeError } from "../../js/apps/error.js";
 import { AppProcess } from "../../js/apps/process.js";
+import { Sleep } from "../../js/sleep.js";
 
 export default class MsgBoxProcess extends AppProcess {
   data;
@@ -41,8 +42,16 @@ export default class MsgBoxProcess extends AppProcess {
       buttonElement.focus();
     }
 
-    setTimeout(() => {
-      this.handler.renderer.centerWindow(this._pid);
-    });
+    await Sleep(0);
+
+    this.handler.renderer.centerWindow(this._pid);
+
+    await Sleep(0);
+
+    const window = this.getWindow();
+
+    if (!window) return;
+
+    window.classList.add("show-error");
   }
 }

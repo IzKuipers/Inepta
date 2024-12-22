@@ -49,6 +49,12 @@ export class AppProcess extends Process {
     return element;
   }
 
+  getWindow() {
+    const window = document.querySelector(`div.window[data-pid="${this._pid}"]`);
+
+    return window || undefined;
+  }
+
   // Utility function for getting elements in the scope of the app's HTML
   getElements(querySelector, error = false) {
     const element = document.querySelectorAll(
