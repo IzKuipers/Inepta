@@ -1,16 +1,18 @@
 div.window.shell div.taskbar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 41px;
+  bottom: 10px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 52px;
   background-color: var(--shell-bg);
   backdrop-filter: blur(10px);
-  border-top: var(--border-clr) 1px solid;
+  border: var(--border-clr) 1px solid;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 0;
   z-index: 100000000000000000;
+  overflow: hidden;
 }
 
 div.window.shell div.taskbar #activeApps {
@@ -18,8 +20,11 @@ div.window.shell div.taskbar #activeApps {
   overflow-x: scroll;
   overflow-y: hidden;
   display: flex;
-  gap: 5px;
+  gap: 10px;
   padding-left: 5px;
+  margin-left: 5px;
+  border-left: var(--button-bg) 1px solid;
+  height: 40px;
 }
 
 div.window.shell div.taskbar #activeApps::-webkit-scrollbar {
@@ -27,20 +32,20 @@ div.window.shell div.taskbar #activeApps::-webkit-scrollbar {
 }
 
 div.window.shell div.taskbar #activeApps button {
-  height: 30px;
-  margin: 5px 0;
-  padding: 0 10px;
+  height: 40px;
+  /* margin: 5px 0; */
+  padding: 0 12px;
   border: none;
   background-color: transparent;
   white-space: nowrap;
-  width: 170px;
+  /* width: 170px; */
   min-width: 50px;
   text-align: left;
   max-width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 4px;
-  background-color: var(--button-bg);
+  border-radius: 6px;
+  /* background-color: var(--button-bg); */
 }
 
 div.window.shell div.taskbar #activeApps button:hover {
@@ -52,8 +57,8 @@ div.window.shell div.taskbar #activeApps button:active {
 }
 
 div.window.shell div.taskbar #activeApps button.focused {
-  background-color: var(--shell-bg);
-  outline: var(--border) !important;
+  background-color: var(--start-button-active-bg);
+  /* outline: var(--border) !important; */
 }
 
 div.window.shell div.taskbar #activeApps button.closing {
@@ -62,28 +67,29 @@ div.window.shell div.taskbar #activeApps button.closing {
 
 div.window.shell div.system-area {
   margin-left: auto;
-  padding: 0 15px;
+  padding: 0 20px;
   min-width: fit-content;
   height: 100%;
-  background-color: var(--button-bg);
 }
 
 div.window.shell div.system-area div#clock {
-  line-height: 40px;
+  line-height: 50px;
+  font-weight: 500;
 }
 
 div.window.shell div.taskbar button#startButton {
-  width: 41px;
+  width: 40px;
   height: 40px;
-  background-color: transparent;
   border: none;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  min-width: 41px;
-  border-right: var(--button-bg) 1px solid;
+  min-width: 40px;
+  background-color: var(--button-bg);
+  margin-left: 5px;
+  border-radius: 6px;
 }
 
 div.window.shell div.taskbar button#startButton:hover {
