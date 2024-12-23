@@ -1,7 +1,4 @@
 <div class="top">
-  <div class="banner">
-    <img src="./assets/apps/initialsetup.svg" alt="InitialSetupApp" />
-  </div>
   <div class="container">
     <div class="page" id="page1">
       <h1>
@@ -14,33 +11,32 @@
       </p>
     </div>
     <div class="page" id="page2">
+      <span class="lucide master icon-user"></span>
       <h1>What's your name?</h1>
-      <p>
-        Please enter a username and password for the first account. This account will also become
-        the first Administrator account. You can add more users later in the Control Panel.
-      </p>
-      <table>
-        <tr>
-          <td>User name:</td>
-          <td>
-            <input type="text" id="usernameField" />
-          </td>
-        </tr>
-        <tr>
-          <td>Password:</td>
-          <td>
-            <input type="password" id="passwordField" />
-          </td>
-        </tr>
-        <tr>
-          <td>Confirm Password:</td>
-          <td>
-            <input type="password" id="passwordConfirmField" />
-          </td>
-        </tr>
-      </table>
+      <div class="modular-field">
+        <span class="name">
+          <span class="lucide icon-id-card"></span>
+          <span>Username</span>
+        </span>
+        <input type="text" id="usernameField" />
+      </div>
+      <div class="modular-field">
+        <span class="name">
+          <span class="lucide icon-key-round"></span>
+          <span>Password</span>
+        </span>
+        <input type="password" id="passwordField" />
+      </div>
+      <div class="modular-field">
+        <span class="name">
+          <span class="lucide icon-shield-check"></span>
+          <span>Confirm password</span>
+        </span>
+        <input type="password" id="passwordConfirmField" />
+      </div>
     </div>
     <div class="page" id="page3">
+      <span class="lucide master icon-check-check"></span>
       <h1>Thank you!</h1>
       <p>
         That's everything we need from you right now. You will have to restart Inepta to complete
@@ -53,16 +49,9 @@
   <div class="actions">
     <button id="previous">
       <span class="lucide icon-chevron-left"></span>
-      <span>Previous</span>
     </button>
     <button id="next">
-      <span class="caption">Next</span>
       <span class="lucide icon-chevron-right"></span>
-    </button>
-    <div class="sep"></div>
-    <button id="shutdown">
-      <span class="lucide icon-power"></span>
-      <span>Shut down</span>
     </button>
   </div>
 </div>

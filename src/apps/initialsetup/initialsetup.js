@@ -21,7 +21,6 @@ export default class SetupHelperProcess extends AppProcess {
   render() {
     this.previousButton = this.getElement("#previous", true);
     this.nextButton = this.getElement("#next", true);
-    this.shutdownButton = this.getElement("#shutdown", true);
     this.usernameField = this.getElement("#usernameField", true);
     this.passwordField = this.getElement("#passwordField", true);
     this.confirmField = this.getElement("#passwordConfirmField", true);
@@ -43,13 +42,6 @@ export default class SetupHelperProcess extends AppProcess {
       "click",
       this.safe(() => {
         this.next();
-      })
-    );
-
-    this.shutdownButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.powerLogic.shutdown();
       })
     );
   }

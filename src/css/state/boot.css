@@ -17,6 +17,7 @@
 
 .boot-screen div.progress-bar div.inner {
   height: inherit;
+  border-radius: inherit;
   background-color: var(--accent-light);
 }
 
