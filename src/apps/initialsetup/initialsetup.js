@@ -67,10 +67,11 @@ export default class SetupHelperProcess extends AppProcess {
 
   updateActions() {
     const previous = this.getElement("#previous", true);
-    const next = this.getElement("#next span.caption", true);
+    const next = this.getElement("#next span.lucide", true);
 
     previous.disabled = this.pageIndex <= 1;
-    next.innerText = this.pageIndex >= this.pageCount ? "Finish" : "Next";
+    next.classList.toggle("icon-check", this.pageIndex >= this.pageCount);
+    next.classList.toggle("icon-chevron-right", !(this.pageIndex >= this.pageCount));
   }
 
   previous() {
