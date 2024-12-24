@@ -1,5 +1,5 @@
-import { KERNEL } from "../../env.js";
 import { Process } from "../process/instance.js";
+import { IneptaKernel } from "./index.js";
 
 export class InitProcess extends Process {
   constructor(handler, pid, parentPid) {
@@ -12,6 +12,10 @@ export class InitProcess extends Process {
 
   jumpstart() {
     // USER SPACE STARTS HERE
-    KERNEL.state.loadState(KERNEL.state.store[KERNEL.params.get("state") || "boot"], {}, false);
+    IneptaKernel().state.loadState(
+      IneptaKernel().state.store[IneptaKernel().params.get("state") || "boot"],
+      {},
+      false
+    );
   }
 }

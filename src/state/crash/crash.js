@@ -1,4 +1,4 @@
-import { KERNEL } from "../../env.js";
+import { IneptaKernel } from "../../js/kernel/index.js";
 import { LogStore } from "../../js/logging.js";
 import { RegistryHives } from "../../js/registry/store.js";
 import { getStateProps } from "../../js/state/store.js";
@@ -12,13 +12,13 @@ export default async function render() {
 
   appRenderer.remove();
 
-  const { text } = getStateProps(KERNEL.state.store.crash);
+  const { text } = getStateProps(IneptaKernel().state.store.crash);
 
   crashText.innerText = text;
 
   try {
-    const fs = KERNEL.getModule("fs");
-    const registry = KERNEL.getModule("registry");
+    const fs = IneptaKernel().getModule("fs");
+    const registry = IneptaKernel().getModule("registry");
     const now = new Date().getTime().toString();
     const logPath = `./System/CrashLogs/${now}.log`;
 
@@ -39,7 +39,7 @@ export default async function render() {
 
     fs.writeFile(logPath, crashText.innerText, "SYSTEM");
   } catch (e) {
-    console.debug(e);
+    alert(e);
   }
 
   throw reason;

@@ -1,9 +1,10 @@
 :root #main[data-theme="dark"] *,
 :root #main * {
   --bg: #222;
-  --shell-bg: #222d;
+  --bg-transparent: #222d;
   --fg: #fff;
   --fg-secondary: #ddd;
+  --shell-bg: #000a;
   --border-clr: #444;
   --border: var(--border-clr) 1px solid;
   --border-accent: var(--accent) 1px solid;
@@ -25,7 +26,7 @@
 }
 :root #main[data-theme="light"] * {
   --bg: #fff;
-  --shell-bg: #fffb;
+  --bg-transparent: #fffb;
   --fg: #333;
   --fg-secondary: #666;
   --border-clr: #bbb;

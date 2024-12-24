@@ -20,7 +20,7 @@ div#startMenu {
   border-radius: 15px;
   border: var(--border);
   outline: var(--secondary-border) !important;
-  background-color: var(--shell-bg);
+  background-color: var(--bg-transparent);
   width: 500px;
   height: 350px;
   backdrop-filter: blur(10px);

@@ -1,4 +1,4 @@
-import { setKernel } from "../../env.js";
+import { KERNEL, setKernel } from "../../env.js";
 import { Crash } from "../crash.js";
 import { handleConsoleIntercepts } from "../error/console.js";
 import { handleGlobalErrors } from "../error/global.js";
@@ -9,7 +9,7 @@ import { CoreKernelModules } from "./module/store.js";
 
 const { readFile } = require("fs/promises");
 
-export class IneptaKernel {
+class _kernel {
   fs;
   state;
   stack;
@@ -18,6 +18,13 @@ export class IneptaKernel {
   startMs;
   modules = [];
   BUILD = "";
+
+  /**
+   * @returns {IneptaKernel} The current inepta kernel
+   */
+  static get() {
+    return KERNEL;
+  }
 
   constructor() {
     Log("KERNEL", "Starting kernel");
@@ -76,8 +83,6 @@ export class IneptaKernel {
     await this.stack.startRenderer("appRenderer", this.initPid);
 
     this.init.jumpstart();
-
-    console.log(this);
   }
 
   Log(source, message, type = 0) {
@@ -119,3 +124,15 @@ export class IneptaKernel {
     }
   }
 }
+
+export const IneptaKernel = new Proxy(_kernel, {
+  apply() {
+    return KERNEL;
+  },
+
+  construct(target, argArray) {
+    if (KERNEL) throw new Error("Attempted duplicate kernel construct");
+
+    return new target(...argArray);
+  },
+});

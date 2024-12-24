@@ -1,16 +1,17 @@
 div.window.cabinet div.top {
   display: flex;
-  gap: 5px;
-  padding: 10px;
+  padding: 0 15px;
+  align-items: center;
 }
 
 div.window.cabinet div.top button.lucide {
   padding: 0;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   font-size: 16px;
-  border-radius: 15px;
+  border-radius: 20px;
   background-color: transparent;
+  outline: none !important;
 }
 
 div.window.cabinet div.top button.lucide:hover {
@@ -20,32 +21,61 @@ div.window.cabinet div.top button.lucide:hover {
 div.window.cabinet div.top button.lucide:active {
   background-color: var(--button-active-bg);
 }
+div.window.cabinet div.top button.home-button {
+  margin-right: 10px;
+}
 
-div.window.cabinet div.navigation,
-div.window.cabinet div.address-bar-wrapper {
-  display: Flex;
+div.window.cabinet div.navigation {
+  display: flex;
+  height: 40px;
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs {
+  flex-grow: 1;
+  /* background-color: #f0f; */
+  white-space: nowrap;
+  overflow-x: scroll;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs:hover {
+  background-color: var(--button-bg);
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs::-webkit-scrollbar {
+  display: none;
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs button.crumb {
+  margin-right: 5px;
+  background-color: transparent;
+  height: 40px;
+  opacity: 0.5;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs button.crumb:last-child {
+  opacity: 1;
+  font-weight: bold;
+}
+
+div.window.cabinet div.address-bar-wrapper #breadCrumbs button.crumb:hover {
+  background-color: var(--button-hover-bg);
+  opacity: 1;
 }
 
 div.window.cabinet div.address-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
   flex-grow: 1;
-  gap: 10px;
 }
 
 div.window.cabinet div.address-bar-wrapper #addressBar {
   flex-grow: 1;
   height: 30px;
   margin: 0;
-}
-
-div.window.cabinet div.address-bar-wrapper #goButton {
-  display: flex;
-  height: 30px;
-  align-items: center;
-  gap: 5px;
-  padding: 0 10px;
-  line-height: 16px;
-}
-
-div.window.cabinet div.address-bar-wrapper #goButton > span.lucide {
-  font-size: 16px;
 }

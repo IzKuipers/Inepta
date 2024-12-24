@@ -1,7 +1,5 @@
-import { KERNEL } from "../../env.js";
 import { loadBuiltinApps } from "../apps/builtin.js";
-import { MessageBox } from "../desktop/message.js";
-import { MessageIcons } from "../images/msgbox.js";
+import { IneptaKernel } from "../kernel/index.js";
 import { Process } from "../process/instance.js";
 import { RegistryHives } from "../registry/store.js";
 import { getAccentColorVariations } from "../ui/color.js";
@@ -90,7 +88,7 @@ export class UserDaemon extends Process {
       if (proc.closeWindow) await proc.closeWindow();
     }
 
-    KERNEL.state.loadState(KERNEL.state.store.login, { type: "logout" });
+    IneptaKernel().state.loadState(IneptaKernel().state.store.login, { type: "logout" });
     this.main.style = "";
   }
 

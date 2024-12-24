@@ -4,6 +4,7 @@ div.window:not(.core) > div.body button {
   padding: 0 15px;
   border-radius: 8px;
   height: 36px;
+  transition: background-color 0.2s;
 }
 
 div.window:not(.core) > div.body button:focus {

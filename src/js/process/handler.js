@@ -27,7 +27,7 @@ export class ProcessHandler extends KernelModule {
     try {
       this.renderer = await this.spawn(AppRenderer, initPid, "SYSTEM", renderTarget);
     } catch (e) {
-      console.log(e);
+      throw new Error("ProcessHandler.startRenderer: Starting renderer failed!");
     }
   }
 

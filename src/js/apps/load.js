@@ -1,4 +1,4 @@
-import { KERNEL } from "../../env.js";
+import { IneptaKernel } from "../kernel/index.js";
 import { Log } from "../logging.js";
 import { RegistryHives } from "../registry/store.js";
 import { AppLoadError } from "./error.js";
@@ -43,7 +43,7 @@ export async function loadApp(data = {}) {
     Log(`loadApp`, `${data.id}: Copying application metadata to the Registry.`);
 
     // Copy the application metadata in full to the registry
-    KERNEL.registry.setValue(RegistryHives.apps, `${data.id}`, data);
+    IneptaKernel().registry.setValue(RegistryHives.apps, `${data.id}`, data);
   } catch (e) {
     // Throw an error if anything went wrong
     throw new AppLoadError(`Failed to import "${data.files.js}" for ${data.id}: ${e.message}`);

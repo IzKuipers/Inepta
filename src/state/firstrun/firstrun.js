@@ -1,8 +1,8 @@
-import { KERNEL } from "../../env.js";
+import { IneptaKernel } from "../../js/kernel/index.js";
 import { Sleep } from "../../js/sleep.js";
 
 export default async function render() {
-  const clone = KERNEL.getModule("clone");
+  const clone = IneptaKernel().getModule("clone");
 
   const statusText = document.querySelector("#stateLoader.first-run #statusText");
   const progressText = document.querySelector("#stateLoader.first-run #progressText");
@@ -31,8 +31,6 @@ export default async function render() {
 
   const endTime = new Date().getTime();
   const duration = endTime - startTime;
-
-  console.log(duration);
 
   circlesDiv.classList.add("visible");
   progressText.innerHTML = "Deploying filesystem &mdash; 0% Complete";

@@ -1,4 +1,4 @@
-import { KERNEL } from "../env.js";
+import { IneptaKernel } from "./kernel/index.js";
 
 export const LogStore = []; // The session's log store
 export const LogType = {
@@ -14,8 +14,8 @@ export const LogType = {
 
 // Global function for logging
 export function Log(source, message, type = 0) {
-  if (!KERNEL) return; // No kernel? No log.
+  if (!IneptaKernel()) return; // No kernel? No log.
 
   // Send the log data to the kernel
-  KERNEL.Log(source, message, type);
+  IneptaKernel().Log(source, message, type);
 }

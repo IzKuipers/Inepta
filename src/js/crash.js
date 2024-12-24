@@ -1,4 +1,4 @@
-import { KERNEL } from "../env.js";
+import { IneptaKernel } from "./kernel/index.js";
 import { Log, LogStore, LogType } from "./logging.js";
 
 export let CRASHING = false;
@@ -31,7 +31,7 @@ export function Crash(reason) {
     .join("\n")}`;
 
   // Get the currently loaded StateHandler
-  const state = KERNEL.getModule("state");
+  const state = IneptaKernel().getModule("state");
 
   // Load the crash state
   state.loadState(state.store.crash, { text }, true);
@@ -39,7 +39,7 @@ export function Crash(reason) {
 
 export function ManualCrash(text) {
   // Get the currently loaded StateHandler
-  const state = KERNEL.getModule("state");
+  const state = IneptaKernel().getModule("state");
 
   // Load the crash state
   state.loadState(state.store.crash, { text }, true);

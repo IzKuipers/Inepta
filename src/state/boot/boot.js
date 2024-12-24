@@ -1,4 +1,4 @@
-import { KERNEL } from "../../env.js";
+import { IneptaKernel } from "../../js/kernel/index.js";
 import { RegistryHives } from "../../js/registry/store.js";
 import { Sleep } from "../../js/sleep.js";
 import { ProgressBar } from "../../js/ui/progress.js";
@@ -6,8 +6,8 @@ import { ProgressBar } from "../../js/ui/progress.js";
 export default async function render() {
   const status = document.querySelector("#stateLoader.boot-screen #status");
   const bottom = document.querySelector("#stateLoader.boot-screen div.bottom");
-  const clone = KERNEL.getModule("clone");
-  const registry = KERNEL.getModule("registry");
+  const clone = IneptaKernel().getModule("clone");
+  const registry = IneptaKernel().getModule("registry");
 
   const progressBar = new ProgressBar({
     indeterminate: true,
@@ -26,10 +26,8 @@ export default async function render() {
   await Sleep(3000);
 
   if (clone.needsClone) {
-    KERNEL.state.loadState(KERNEL.state.store.firstrun);
+    IneptaKernel().state.loadState(IneptaKernel().state.store.firstrun);
   } else {
-    KERNEL.state.loadState(KERNEL.state.store.login);
+    IneptaKernel().state.loadState(IneptaKernel().state.store.login);
   }
-
-  console.trace();
 }

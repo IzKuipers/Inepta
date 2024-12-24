@@ -525,8 +525,6 @@ export class AppRenderer extends Process {
       process: filteredProcess,
     };
 
-    console.log(crashReport);
-
     this.registry.setValue(RegistryHives.local, `renderer.Crashes.${uuid}`, crashReport);
 
     // Show the error message. The options here should be self explanatory.

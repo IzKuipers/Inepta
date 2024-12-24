@@ -26,6 +26,9 @@ export default class CabinetProcess extends AppProcess {
     const user = this.userLogic.getUser(this.userId);
 
     this.aliases[user.userFolder.replace("./", "")] = "You";
+    this.aliases[this.userId] = "You";
+    this.aliases["."] = "Inepta HD";
+
     this.breadCrumbs = this.getElement("#breadCrumbs", true);
 
     this.updateLocations();
@@ -239,6 +242,7 @@ export default class CabinetProcess extends AppProcess {
     const backButton = this.getElement("#backButton", true);
     const forwardButton = this.getElement("#forwardButton", true);
     const parentButton = this.getElement("#parentButton", true);
+    const homeButton = this.getElement("#homeButton", true);
 
     backButton.addEventListener(
       "click",
@@ -258,6 +262,13 @@ export default class CabinetProcess extends AppProcess {
       "click",
       this.safe(() => {
         this.parentDir();
+      })
+    );
+
+    homeButton.addEventListener(
+      "click",
+      this.safe(() => {
+        this.navigate(this.environment.getProperty("userprofile"));
       })
     );
   }
@@ -288,25 +299,33 @@ export default class CabinetProcess extends AppProcess {
 
     this.breadCrumbs.innerHTML = "";
 
-    for (let i = startIndex; i < crumbs.length; i++) {
-      const crumb = document.createElement("button");
+    if (crumbs.length === 1 && crumbs[0] === ".") {
+      this._breadCrumb(".", 0);
 
-      crumb.className = "crumb";
-      crumb.addEventListener(
-        "click",
-        this.safe(() => {
-          const path = this.generatePath(crumbs, crumbs[i], i);
-
-          console.log(path);
-        })
-      );
-
-      crumb.innerText = crumbs[i];
-
-      this.breadCrumbs.append(crumb);
+      return;
     }
 
-    console.log(crumbs);
+    for (let i = startIndex; i < crumbs.length; i++) {
+      this._breadCrumb(crumbs, i);
+    }
+  }
+
+  _breadCrumb(crumbs, i) {
+    const crumb = document.createElement("button");
+
+    crumb.className = "crumb";
+    crumb.addEventListener(
+      "click",
+      this.safe(() => {
+        const path = this.generatePath(crumbs, crumbs[i], i);
+
+        this.navigate(path);
+      })
+    );
+
+    crumb.innerText = this.aliases[crumbs[i]] || crumbs[i];
+
+    this.breadCrumbs.append(crumb);
   }
 
   generatePath(crumbs, crumb, I) {

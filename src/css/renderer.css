@@ -2,7 +2,7 @@
 #appRenderer.no-blur * {
   backdrop-filter: none !important;
   --button-semitransparent-bg: var(--button-bg) !important;
-  --shell-bg: var(--bg) !important;
+  --bg-transparent: var(--bg) !important;
 }
 
 #appRenderer.no-anim,

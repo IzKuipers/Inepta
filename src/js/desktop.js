@@ -7,6 +7,7 @@ import { LogStore } from "./logging.js";
 import { Sleep } from "./sleep.js";
 import { StateError } from "./state/error.js";
 import { UserData } from "./user/data.js";
+import { IneptaKernel } from "./kernel/index.js";
 
 // Renderer function invoked when the Desktop state is being loaded
 export default async function render() {

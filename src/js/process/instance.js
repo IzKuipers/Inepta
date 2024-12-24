@@ -1,4 +1,4 @@
-import { KERNEL } from "../../env.js";
+import { IneptaKernel } from "../kernel/index.js";
 import { Log } from "../logging.js";
 import { ProcessDispatch } from "./dispatch.js";
 
@@ -17,10 +17,10 @@ export class Process {
     this._disposed = false;
     this.parentPid = parentPid;
     this.handler = handler;
-    this.kernel = KERNEL;
-    this.registry = KERNEL.getModule("registry");
-    this.environment = KERNEL.getModule("environment");
-    this.context = KERNEL.getModule("context");
+    this.kernel = IneptaKernel();
+    this.registry = IneptaKernel().getModule("registry");
+    this.environment = IneptaKernel().getModule("environment");
+    this.context = IneptaKernel().getModule("context");
     this.dispatch = new ProcessDispatch(this);
 
     this.name ||= this.constructor.name;

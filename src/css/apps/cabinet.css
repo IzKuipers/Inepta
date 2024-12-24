@@ -3,32 +3,51 @@
 @import url("./cabinet/container.css");
 @import url("./cabinet/statusbar.css");
 
+div.window.cabinet {
+  backdrop-filter: none;
+  background-color: var(--bg);
+}
+
+div.window.cabinet.focused {
+  backdrop-filter: blur(15px);
+  background-color: var(--bg-transparent);
+}
+
+div.window.cabinet div.titlebar {
+  /* border-bottom: 0; */
+}
+
 div.window.cabinet > div.body {
   padding: 0;
+  background-color: transparent;
 }
 
 div.window.cabinet div.top {
-  height: 51px;
-  border-bottom: var(--border);
+  height: 70px;
 }
 
 div.window.cabinet div.panes {
   display: flex;
-  align-items: center;
-  height: calc(100% - 51px - 25px);
+  height: calc(100% - 25px);
 }
 
 div.window.cabinet div.sidebar {
   width: 200px;
   height: 100%;
-  border-right: var(--border);
-  padding: 15px;
+  border-right: var(--button-bg) 1px solid;
+  padding: 10px;
+}
+
+div.window.cabinet div.right {
+  width: calc(100% - 200px);
+  background-color: var(--bg);
 }
 
 div.window.cabinet div#container {
-  width: calc(100% - 200px);
-  height: 100%;
+  width: 100%;
+  height: calc(100% - 70px);
   padding: 15px;
+  padding-top: 0;
   overflow-x: auto;
   overflow-y: auto;
 }
