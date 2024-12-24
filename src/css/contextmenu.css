@@ -3,13 +3,16 @@ div.context-menu {
   top: var(--y, -1000px);
   left: var(--x, -1000px);
   z-index: 1000000000000000000000000000000000000000000000000;
-  padding: 3px;
+  padding: 5px;
   border: var(--border);
   background-color: var(--shell-bg);
   backdrop-filter: blur(15px);
   min-width: 180px;
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: 0 5px 20px 5px #0003;
+  opacity: 0;
+  pointer-events: none;
+  animation: context-menu-show 0.15s forwards;
 }
 
 div.context-menu button {
@@ -18,6 +21,8 @@ div.context-menu button {
   border: none;
   background-color: transparent;
   color: var(--fg);
+  border-radius: 6px;
+  padding: 5px 10px;
 }
 
 div.context-menu button:not(:disabled):hover {
@@ -44,4 +49,16 @@ div.context-menu hr {
   margin: 5px 2px;
   border: var(--border);
   border-bottom: none;
+}
+
+@keyframes context-menu-show {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  100% {
+    opacity: 1;
+    pointer-events: initial;
+  }
 }

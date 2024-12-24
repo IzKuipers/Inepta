@@ -113,7 +113,7 @@ export default class SetupHelperProcess extends AppProcess {
         {
           title: "Missing values",
           message:
-            "You forgot to fill out one of the fields! Please fill out all fields before continuing.",
+            "Something doesn't feel quite right... Oh! You forgot to fill out one of the fields. You'll have to fill those out before we can continue.",
           buttons: [{ caption: "Okay", action() {} }],
           icon: MessageIcons.warning,
         },
@@ -129,7 +129,7 @@ export default class SetupHelperProcess extends AppProcess {
           title: "Passwords don't match",
           message: "The passwords you entered don't match! Please try again.",
           buttons: [{ caption: "Okay", action() {} }],
-          icon: MessageIcons.warning,
+          icon: MessageIcons.critical,
         },
         this._pid
       );

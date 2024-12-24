@@ -55,7 +55,7 @@ export default class LoginAppProcess extends AppProcess {
 
     if (!this.type) {
       if (!this.registry.getValue(RegistryHives.local, "initialSetup.completed")) {
-        this.displayStatus(`Welcome to Inepta`);
+        this.displayStatus(`&nbsp;`);
         await loadApp(InitialSetupApp);
         await spawnApp("initialSetup", this._pid, this.userId);
 

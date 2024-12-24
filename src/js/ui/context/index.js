@@ -60,7 +60,7 @@ export class ContextMenuLogic extends KernelModule {
       this.menu.style.setProperty("--x", `${x}px`);
       this.menu.style.setProperty("--y", `${y}px`);
       this.locked = false;
-    }, 10);
+    }, 2);
   }
 
   correctMenuPosition(x, y) {

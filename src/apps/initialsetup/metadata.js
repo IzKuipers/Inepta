@@ -5,9 +5,9 @@ export const InitialSetupApp = {
     author: "Izaak Kuipers",
     icon: "./assets/inepta.svg",
   },
-  size: { w: 640, h: 480 },
-  minSize: { w: 640, h: 480 },
-  maxSize: { w: 640, h: 480 },
+  size: { w: 640, h: 550 },
+  minSize: { w: 640, h: 550 },
+  maxSize: { w: 640, h: 550 },
   position: { centered: true },
   state: {
     resizable: false,

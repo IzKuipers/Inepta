@@ -1,5 +1,6 @@
 import { AppRuntimeError } from "../../js/apps/error.js";
 import { AppProcess } from "../../js/apps/process.js";
+import { spawnApp } from "../../js/apps/spawn.js";
 import { MessageBox } from "../../js/desktop/message.js";
 import { MessageIcons } from "../../js/images/msgbox.js";
 import { Store } from "../../js/store.js";
@@ -31,7 +32,8 @@ export default class NapkinProcess extends AppProcess {
     });
 
     this.clickMenu(this.fileMenu, () => [
-      { caption: "New", action: () => this.newFile(), separator: true },
+      { caption: "New", action: () => this.newFile() },
+      { caption: "New Window", action: () => this.newWindow(), separator: true },
       {
         caption: "Save",
         action: this.safe(() => {
@@ -156,5 +158,9 @@ export default class NapkinProcess extends AppProcess {
 
   about() {
     throw new AppRuntimeError("Not implemented: ABOUT");
+  }
+
+  newWindow() {
+    spawnApp("napkin");
   }
 }

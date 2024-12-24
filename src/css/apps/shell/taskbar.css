@@ -15,15 +15,15 @@ div.window.shell div.taskbar {
   align-items: center;
   gap: 0;
   z-index: 100000000000000000;
-  overflow: hidden;
+  /* overflow: hidden;
   translate: 0 40px;
-  transition: translate 0.3s;
+  transition: translate 0.3s; */
 }
 
 div.window.shell div.taskbar > * {
   transition: opacity 0.3s;
 }
-
+/* 
 div.window.shell div.taskbar:not(:hover) > * {
   pointer-events: none;
   opacity: 0;
@@ -31,7 +31,7 @@ div.window.shell div.taskbar:not(:hover) > * {
 
 div.window.shell div.taskbar:hover {
   translate: 0 0;
-}
+} */
 
 div.window.shell div.taskbar #activeApps {
   flex-grow: 1;
