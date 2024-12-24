@@ -90,7 +90,7 @@ div.window.regEditApp div.panes > #directoryView button.expander {
   white-space: nowrap;
 }
 div.window.regEditApp div.panes > #directoryView button.expander.selected {
-  background-color: var(--accent-darker);
+  background-color: var(--start-button-hover-bg);
 }
 
 div.window.regEditApp div.panes > #directoryView button.expander::before {

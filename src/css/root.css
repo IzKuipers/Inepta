@@ -1,4 +1,4 @@
-:root #main[data-theme="dark"] *,
+:root #main,
 :root #main * {
   --bg: #222;
   --bg-transparent: #222d;
@@ -24,23 +24,27 @@
   --button-active-bg: #111;
   --secondary-border: var(--bg) 1px solid;
 }
-:root #main[data-theme="light"] * {
+
+:root #main:has(#stateLoader[data-theme="light"]),
+:root #main:has(#stateLoader[data-theme="light"]) * {
   --bg: #fff;
-  --bg-transparent: #fffb;
+  --bg-transparent: rgba(255, 255, 255, 0.89);
   --fg: #333;
   --fg-secondary: #666;
+  --shell-bg: #fffe;
   --border-clr: #bbb;
   --border: var(--border-clr) 1px solid;
   --border-accent: var(--accent) 1px solid;
   --border-accent-dark: var(--accent-darker) 1px solid;
-  --start-button-bg: #be490038;
-  --start-button-hover-bg: #be490066;
-  --start-button-active-bg: #752d0038;
+  --start-button-bg: #be49005e;
+  --start-button-hover-bg: #be49009a;
+  --start-button-active-bg: #752d0044;
   --accent: #ff9858;
   --accent-dark: #ff7f2f;
   --accent-darker: #b85b21;
+  --accent-superdark: #3b2619;
   --accent-light: #ffc5a1;
-  --button-semitransparent-bg: #eeeeeeaa;
+  --button-semitransparent-bg: #eeeeeedd;
   --button-bg: #eeeeee;
   --button-hover-bg: #dddddd;
   --button-active-bg: #dfdfdf;
