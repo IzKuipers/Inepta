@@ -1,7 +1,12 @@
+div.window.initialSetup div.titlebar {
+  display: none;
+}
+
 div.window.initialSetup div.body {
   padding: 0 !important;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 div.window.initialSetup div.top {

@@ -8,6 +8,11 @@ div.start-menu-wrapper {
   justify-content: center;
   align-items: center;
   pointer-events: none !important;
+  transition: background-color 0.3s;
+}
+
+div.start-menu-wrapper:has(div#startMenu.opened) {
+  background-color: #0005;
 }
 
 div#startMenu {
@@ -33,11 +38,11 @@ div#startMenu:not(.opened) {
 
 div#startMenu div.top {
   width: 100%;
-  height: 41px;
+  height: 51px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 15px;
+  padding-left: 20px;
   border-bottom: var(--border);
 }
 
@@ -47,25 +52,28 @@ div#startMenu div.right button {
   border: none;
   background-color: transparent;
   font-size: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 div#startMenu div.right button:hover {
   color: var(--accent-light);
+  background-color: var(--button-hover-bg);
 }
 
 div#startMenu div.right button:active {
   color: var(--accent-dark);
+  background-color: var(--button-active-bg);
 }
 
 div#startMenu div.right {
-  height: 40px;
-  border-left: var(--border);
-  background-color: var(--button-semitransparent-bg);
-  padding: 0 15px;
+  height: 50px;
+  padding: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 0;
 }
 
 div#startMenu #appList {
@@ -109,4 +117,5 @@ div#startMenu #appList button:hover {
 
 div#startMenu #username {
   font-weight: bold;
+  font-size: 16px;
 }

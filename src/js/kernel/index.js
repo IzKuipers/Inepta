@@ -76,6 +76,8 @@ export class IneptaKernel {
     await this.stack.startRenderer("appRenderer", this.initPid);
 
     this.init.jumpstart();
+
+    console.log(this);
   }
 
   Log(source, message, type = 0) {

@@ -4,7 +4,7 @@
   --shell-bg: #222d;
   --fg: #fff;
   --fg-secondary: #ddd;
-  --border-clr: #555;
+  --border-clr: #444;
   --border: var(--border-clr) 1px solid;
   --border-accent: var(--accent) 1px solid;
   --border-accent-dark: var(--accent-darker) 1px solid;
