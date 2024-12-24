@@ -11,8 +11,7 @@ export default class CabinetProcess extends AppProcess {
   contents;
   historyIndex = Store(-1);
   history = Store([]);
-  addressBar;
-  goButton;
+  breadCrumbs;
   aliases = {};
 
   constructor(handler, pid, parentPid, app, path) {
@@ -27,11 +26,13 @@ export default class CabinetProcess extends AppProcess {
     const user = this.userLogic.getUser(this.userId);
 
     this.aliases[user.userFolder.replace("./", "")] = "You";
+    this.breadCrumbs = this.getElement("#breadCrumbs", true);
 
     this.updateLocations();
     this.updateFavourites();
     this.navigationControls();
-    this.setupAddressBar();
+    this.updateBreadCrumbs();
+
     this.navigate(this.path);
 
     this.historyIndex.subscribe((v) => {
@@ -87,7 +88,7 @@ export default class CabinetProcess extends AppProcess {
       this.path;
 
     this.windowTitle.set(aliasedPath);
-    this.addressBar.value = aliasedPath;
+    this.updateBreadCrumbs(this.path);
   }
 
   updateStatusbar() {
@@ -281,31 +282,40 @@ export default class CabinetProcess extends AppProcess {
     this.goHere(this.history.get()[index]);
   }
 
-  setupAddressBar() {
-    this.addressBar = this.getElement("#addressBar", true);
-    this.goButton = this.getElement("#goButton", true);
+  updateBreadCrumbs(path = this.path) {
+    const crumbs = path.split("/");
+    const startIndex = crumbs[0] == "." ? 1 : 0;
 
-    this.addressBar.addEventListener(
-      "keydown",
-      this.safe((e) => {
-        if (e.key === "Enter") {
-          this.navigate(this.addressBar.value);
-        }
-      })
-    );
+    this.breadCrumbs.innerHTML = "";
 
-    this.addressBar.addEventListener(
-      "input",
-      this.safe(() => {
-        this.goButton.disabled = !this.addressBar.value;
-      })
-    );
+    for (let i = startIndex; i < crumbs.length; i++) {
+      const crumb = document.createElement("button");
 
-    this.goButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.navigate(this.addressBar.value);
-      })
-    );
+      crumb.className = "crumb";
+      crumb.addEventListener(
+        "click",
+        this.safe(() => {
+          const path = this.generatePath(crumbs, crumbs[i], i);
+
+          console.log(path);
+        })
+      );
+
+      crumb.innerText = crumbs[i];
+
+      this.breadCrumbs.append(crumb);
+    }
+
+    console.log(crumbs);
+  }
+
+  generatePath(crumbs, crumb, I) {
+    let str = "";
+
+    for (let i = 0; i < I; i++) {
+      str += `${crumbs[i]}/`;
+    }
+
+    return `${str}${crumb}`;
   }
 }
