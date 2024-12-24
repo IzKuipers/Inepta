@@ -1,13 +1,12 @@
+import { LoginApp } from "../apps/loginapp/metadata.js";
+import { NewLoginApp } from "../apps/newloginapp/metadata.js";
 import { loadApp } from "./apps/load.js";
 import { spawnApp } from "./apps/spawn.js";
 import { AppStore } from "./apps/store.js";
-import { LoginApp } from "../apps/loginapp/metadata.js";
-import { NewLoginApp } from "../apps/newloginapp/metadata.js";
 import { LogStore } from "./logging.js";
 import { Sleep } from "./sleep.js";
 import { StateError } from "./state/error.js";
 import { UserData } from "./user/data.js";
-import { IneptaKernel } from "./kernel/index.js";
 
 // Renderer function invoked when the Desktop state is being loaded
 export default async function render() {

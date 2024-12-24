@@ -16,16 +16,16 @@ import { RendererPid } from "../../env.js";
 import { MessageBox } from "../desktop/message.js";
 import { AppIcons } from "../images/apps.js";
 import { MessageIcons } from "../images/msgbox.js";
+import { IneptaKernel } from "../kernel/index.js";
+import { KernelModule } from "../kernel/module/index.js";
 import { Draggable } from "../neodrag.js";
+import { ProcessDispatch } from "../process/dispatch.js";
 import { Process } from "../process/instance.js";
 import { RegistryHives } from "../registry/store.js";
 import { Sleep } from "../sleep.js";
 import { Store } from "../store.js";
 import { htmlspecialchars } from "../util.js";
 import { AppRendererError } from "./error.js";
-import { IneptaKernel } from "../kernel/index.js";
-import { KernelModule } from "../kernel/module/index.js";
-import { ProcessDispatch } from "../process/dispatch.js";
 
 const { randomUUID } = require("crypto");
 
