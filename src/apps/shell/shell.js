@@ -9,7 +9,7 @@ import { IneptaKernel } from "../../js/kernel/index.js";
 import { Store } from "../../js/store.js";
 import { UserData } from "../../js/user/data.js";
 
-export default class ShellProcess extends AppProcess {
+class _shellProc extends AppProcess {
   powerLogic;
   startOpened = Store(false);
   startPopulated = false;
@@ -76,7 +76,7 @@ export default class ShellProcess extends AppProcess {
 
         button.setAttribute("data-pid", pid);
         button.className = `${proc.app.data.id} opened-app`;
-        button.innerText = proc.app.data.metadata.name;
+        button.innerText = button.title = proc.app.data.metadata.name;
 
         button.addEventListener(
           "click",
@@ -87,10 +87,22 @@ export default class ShellProcess extends AppProcess {
 
         this.contextMenu(button, () => [
           {
-            caption: proc.app.data.metadata.name,
+            caption: proc.windowTitle.get() || proc.app.data.metadata.name,
             disabled: true,
-            separator: true,
           },
+          proc.app.data.hidden
+            ? undefined
+            : {
+                caption: `New ${proc.app.data.metadata.name} window`,
+                action: this.safe(async () => {
+                  await spawnApp(
+                    proc.app.data.id,
+                    this.environment.getProperty("SHELLPID"),
+                    this.userId
+                  );
+                }),
+                separator: true,
+              },
           {
             caption: "Close window",
             action: this.safe(() => {
@@ -108,7 +120,7 @@ export default class ShellProcess extends AppProcess {
         ]);
 
         proc.windowTitle.subscribe((v) => {
-          button.innerText = v;
+          button.innerText = button.title = v;
         });
 
         activeApps.append(button);
@@ -255,3 +267,21 @@ export default class ShellProcess extends AppProcess {
     });
   }
 }
+
+const ShellProcess = new Proxy(_shellProc, {
+  apply() {
+    const kernel = IneptaKernel();
+    const stack = kernel.getModule("stack");
+    const instances = stack.renderer.getAppInstances("shell");
+
+    if (instances.length === 0) return undefined;
+
+    return instances[0];
+  },
+
+  construct(target, argArray) {
+    return new target(...argArray);
+  },
+});
+
+export default ShellProcess;

@@ -13,17 +13,13 @@ div.window.cabinet.focused {
   background-color: var(--bg-transparent);
 }
 
-div.window.cabinet div.titlebar {
-  /* border-bottom: 0; */
-}
-
 div.window.cabinet > div.body {
   padding: 0;
   background-color: transparent;
 }
 
 div.window.cabinet div.top {
-  height: 70px;
+  height: 60px;
 }
 
 div.window.cabinet div.panes {
@@ -45,8 +41,8 @@ div.window.cabinet div.right {
 
 div.window.cabinet div#container {
   width: 100%;
-  height: calc(100% - 70px);
-  padding: 15px;
+  height: calc(100% - 60px);
+  padding: 10px;
   padding-top: 0;
   overflow-x: auto;
   overflow-y: auto;

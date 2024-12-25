@@ -28,16 +28,16 @@ class _kernel {
   }
 
   constructor() {
-    Log("KERNEL", "Starting kernel");
+    this.Log("KERNEL", "Starting kernel");
 
     // KERNEL STARTS HERE
 
-    this.startMs = new Date().getTime();
+    this.startMs = Date.now();
+
+    setKernel(this);
 
     handleGlobalErrors();
     handleConsoleIntercepts();
-
-    setKernel(this);
 
     this.LIVE_MODE = navigator.userAgent.includes("LIVEMODE");
   }
@@ -118,6 +118,7 @@ class _kernel {
   }
 
   async getBuildHash() {
+    Log("KERNEL", "getBuildHash");
     try {
       this.BUILD = (await readFile("./env/HASH", { encoding: "utf-8" })).split("\n")[0];
     } catch {

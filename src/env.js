@@ -6,6 +6,8 @@ export let KERNEL; // Global variable set by IneptaKernel
 
 // Function to set the KERNEL global variable
 export function setKernel(kernel) {
+  kernel.Log("setKernel", kernel.startMs);
+
   KERNEL = kernel;
   window.kernel = kernel;
 }

@@ -475,7 +475,7 @@ export class AppRenderer extends Process {
       const proc = this.handler.getProcess(pid); // Get the process
 
       // Check if 1) the process is an app and 2) if the ID matches. If it matches, add it to the result
-      if (proc && proc.app && proc.app.data && proc.app.data.id === id) result.push(id);
+      if (proc && proc.app && proc.app.data && proc.app.data.id === id) result.push(proc);
     }
 
     // Return the result

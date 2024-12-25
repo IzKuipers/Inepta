@@ -38,6 +38,14 @@ div.window div.titlebar div.window-title {
   /* font-weight: bold; */
 }
 
+div.window div.titlebar div.window-title > span {
+  display: block;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 div.window div.titlebar div.window-title > * {
   color: var(--fg-secondary) !important;
 }
@@ -61,6 +69,11 @@ div.window div.titlebar div.controls button {
   align-items: center;
   justify-content: center;
   border-radius: 12px;
+}
+
+div.window div.titlebar button.close::before,
+div.window div.titlebar div.controls button::before {
+  margin-top: 1px;
 }
 
 div.window div.titlebar button.close:hover {

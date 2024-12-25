@@ -3,6 +3,8 @@ import { MessageIcons } from "../images/msgbox.js";
 import { Log, LogType } from "../logging.js";
 
 export function handleConsoleIntercepts() {
+  Log("handleConsoleIntercepts", "Intercepting console -> warn, error");
+
   console.warn = (message, ...optionalParams) => {
     if (message.includes("Electron Security Warning")) return;
 

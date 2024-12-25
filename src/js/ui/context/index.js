@@ -31,6 +31,8 @@ export class ContextMenuLogic extends KernelModule {
     this.menu.style.setProperty("--y", "");
 
     for (const option of options) {
+      if (!option) continue;
+
       const button = document.createElement("button");
 
       button.className = option.className || "";
