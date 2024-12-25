@@ -135,7 +135,7 @@ export class AppProcess extends Process {
    * Wrapper function for safely handling errors thrown because of callbacks
    *
    * This works by setting the `crashReason` variable if an exception occurs during the code execution of the provided callback.
-   * This ensures that the app crashes, not Inepta entirely. It's also why every callback has to be wrapped in this function, for example:
+   * This ensures that only the app crashes, not Inepta entirely. It's also why every callback has to be wrapped in this function, for example:
    *
    * button.addEventListener("click", this.safe(async () => {
    *   await someOperationThatMightErrorSomehow();
@@ -156,7 +156,7 @@ export class AppProcess extends Process {
   }
 
   // Helper function that adds an event to an element, making it safe in the process
-  addEventListener(element, event, callback) {
+  listener(element, event, callback) {
     element.addEventListener(
       event,
       this.safe((e) => callback(e))

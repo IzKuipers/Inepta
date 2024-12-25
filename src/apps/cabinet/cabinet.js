@@ -156,12 +156,9 @@ export default class CabinetProcess extends AppProcess {
     created.innerText = strftime("%e %b %G %H:%M", new Date(directory.dateCreated));
     size.innerText = "-";
 
-    item.addEventListener(
-      "click",
-      this.safe(() => {
-        this.navigate(this.fs.join(this.path, directory.name));
-      })
-    );
+    this.listener(item, "click", () => {
+      this.navigate(this.fs.join(this.path, directory.name));
+    });
 
     return item;
   }
@@ -177,7 +174,7 @@ export default class CabinetProcess extends AppProcess {
     created.innerText = strftime("%e %b %G %H:%M", new Date(file.dateCreated));
     size.innerText = formatBytes(file.size);
 
-    item.addEventListener("click", () => {
+    this.listener(item, "click", () => {
       spawnApp("napkin", undefined, this.userId, this.fs.join(this.path, file.name));
     });
 
@@ -226,7 +223,7 @@ export default class CabinetProcess extends AppProcess {
     driveCaption.innerText = "Inepta HD";
     driveIcon.src = "./assets/fs/drive.svg";
 
-    driveItem.addEventListener("click", () => {
+    this.listener(driveItem, "click", () => {
       this.navigate(".");
     });
 
@@ -244,33 +241,21 @@ export default class CabinetProcess extends AppProcess {
     const parentButton = this.getElement("#parentButton", true);
     const homeButton = this.getElement("#homeButton", true);
 
-    backButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.back();
-      })
-    );
+    this.listener(backButton, "click", () => {
+      this.back();
+    });
 
-    forwardButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.forward();
-      })
-    );
+    this.listener(forwardButton, "click", () => {
+      this.forward();
+    });
 
-    parentButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.parentDir();
-      })
-    );
+    this.listener(parentButton, "click", () => {
+      this.parentDir();
+    });
 
-    homeButton.addEventListener(
-      "click",
-      this.safe(() => {
-        this.navigate(this.environment.getProperty("userprofile"));
-      })
-    );
+    this.listener(homeButton, "click", () => {
+      this.navigate(this.environment.getProperty("userprofile"));
+    });
   }
 
   back() {
@@ -314,14 +299,12 @@ export default class CabinetProcess extends AppProcess {
     const crumb = document.createElement("button");
 
     crumb.className = "crumb";
-    crumb.addEventListener(
-      "click",
-      this.safe(() => {
-        const path = this.generatePath(crumbs, crumbs[i], i);
 
-        this.navigate(path);
-      })
-    );
+    this.listener(crumb, "click", () => {
+      const path = this.generatePath(crumbs, crumbs[i], i);
+
+      this.navigate(path);
+    });
 
     crumb.innerText = this.aliases[crumbs[i]] || crumbs[i];
 
