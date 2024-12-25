@@ -18,6 +18,7 @@ class _kernel {
   startMs;
   modules = [];
   BUILD = "";
+  PANICKED = false;
 
   /**
    * @returns {IneptaKernel} The current inepta kernel

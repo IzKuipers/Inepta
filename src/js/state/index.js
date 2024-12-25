@@ -1,4 +1,4 @@
-import { CRASHING } from "../crash.js";
+import { IneptaKernel } from "../kernel/index.js";
 import { Log } from "../logging.js";
 import { Process } from "../process/instance.js";
 import { Sleep } from "../sleep.js";
@@ -24,7 +24,7 @@ export class StateHandler extends Process {
   }
 
   async loadState({ html, css, js, name, identifier } = {}, props = {}, instant = false) {
-    if (CRASHING && identifier != "crash-screen") return;
+    if (IneptaKernel().PANICKING && identifier != "crash-screen") return;
 
     if (!html || !css || !js || !name || !identifier)
       throw new StateError("Attempted state load invocation without valid metadata");

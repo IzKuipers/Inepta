@@ -1,5 +1,5 @@
 import { AppRenderer } from "../apps/renderer.js";
-import { CRASHING } from "../crash.js";
+import { IneptaKernel } from "../kernel/index.js";
 import { KernelModule } from "../kernel/module/index.js";
 import { Log } from "../logging.js";
 import { Store } from "../store.js";
@@ -36,7 +36,7 @@ export class ProcessHandler extends KernelModule {
    * @param {any[]} args
    */
   async spawn(process, parentPid = undefined, userId, ...args) {
-    if (CRASHING) return;
+    if (IneptaKernel().PANICKED) return;
 
     const pid = this.getPid();
     const proc = new process(this, pid, parentPid, ...args);
