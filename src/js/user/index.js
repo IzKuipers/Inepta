@@ -97,7 +97,7 @@ export class UserLogic extends KernelModule {
 
     if (!user) return false;
 
-    this.fs.createDirectory(user.userFolder, user.uuid);
+    await this.fs.createDirectory(user.userFolder, user.uuid);
 
     await this.initializePreferences(user);
 

@@ -37,7 +37,7 @@ export default async function render() {
 
     registry.setValue(RegistryHives.kernel, "Crashes", crashes);
 
-    fs.writeFile(logPath, crashText.innerText, "SYSTEM");
+    await fs.writeFile(logPath, crashText.innerText, "SYSTEM");
   } catch (e) {
     alert(e);
   }

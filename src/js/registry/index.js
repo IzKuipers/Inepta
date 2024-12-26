@@ -47,19 +47,19 @@ export class IneptaRegistry extends KernelModule {
 
   async loadRegistry() {
     try {
-      const contents = this.fs.readFile(this.PATH, "SYSTEM");
+      const contents = await this.fs.readFile(this.PATH, "SYSTEM");
 
       this.store.set(JSON.parse(contents));
     } catch {
       this.store.set({});
 
-      this.fs.writeFile(this.PATH, JSON.stringify({}), "SYSTEM");
+      await this.fs.writeFile(this.PATH, JSON.stringify({}), "SYSTEM");
     }
   }
 
   registrySync() {
-    this.store.subscribe((v) => {
-      this.fs.writeFile(this.PATH, JSON.stringify(v), "SYSTEM");
+    this.store.subscribe(async (v) => {
+      await this.fs.writeFile(this.PATH, JSON.stringify(v), "SYSTEM");
     });
   }
 

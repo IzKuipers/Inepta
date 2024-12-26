@@ -36,8 +36,8 @@ class _kernel {
 
     setKernel(this);
 
-    handleGlobalErrors();
-    handleConsoleIntercepts();
+    // handleGlobalErrors();
+    // handleConsoleIntercepts();
 
     this.LIVE_MODE = navigator.userAgent.includes("LIVEMODE");
   }

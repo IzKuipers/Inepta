@@ -49,7 +49,7 @@ export default class CabinetProcess extends AppProcess {
     });
   }
 
-  navigate(path) {
+  async navigate(path) {
     const history = this.history.get();
     let index = this.historyIndex.get();
 
@@ -65,12 +65,12 @@ export default class CabinetProcess extends AppProcess {
     this.history.set(history);
     this.historyIndex.set(index);
 
-    this.goHere(path);
+    await this.goHere(path);
   }
 
-  goHere(path) {
+  async goHere(path) {
     try {
-      const contents = this.fs.readDirectory(path, this.userId);
+      const contents = await this.fs.readDirectory(path, this.userId);
 
       this.path = path;
       this.contents = contents;
@@ -231,8 +231,8 @@ export default class CabinetProcess extends AppProcess {
     locations.append(driveItem);
   }
 
-  parentDir() {
-    this.navigate(this.fs.getParentDirectory(this.path));
+  async parentDir() {
+    this.navigate(await this.fs.getParentDirectory(this.path));
   }
 
   navigationControls() {
@@ -241,41 +241,41 @@ export default class CabinetProcess extends AppProcess {
     const parentButton = this.getElement("#parentButton", true);
     const homeButton = this.getElement("#homeButton", true);
 
-    this.listener(backButton, "click", () => {
-      this.back();
+    this.listener(backButton, "click", async () => {
+      await this.back();
     });
 
-    this.listener(forwardButton, "click", () => {
-      this.forward();
+    this.listener(forwardButton, "click", async () => {
+      await this.forward();
     });
 
-    this.listener(parentButton, "click", () => {
-      this.parentDir();
+    this.listener(parentButton, "click", async () => {
+      await this.parentDir();
     });
 
-    this.listener(homeButton, "click", () => {
-      this.navigate(this.environment.getProperty("userprofile"));
+    this.listener(homeButton, "click", async () => {
+      await this.navigate(this.environment.getProperty("userprofile"));
     });
   }
 
-  back() {
+  async back() {
     let index = this.historyIndex.get();
 
     index--;
 
     this.historyIndex.set(index);
 
-    this.goHere(this.history.get()[index]);
+    await this.goHere(this.history.get()[index]);
   }
 
-  forward() {
+  async forward() {
     let index = this.historyIndex.get();
 
     index++;
 
     this.historyIndex.set(index);
 
-    this.goHere(this.history.get()[index]);
+    await this.goHere(this.history.get()[index]);
   }
 
   updateBreadCrumbs(path = this.path) {

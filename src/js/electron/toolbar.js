@@ -81,6 +81,8 @@ export class ToolbarModule extends KernelModule {
     try {
       const window = BrowserWindow.getAllWindows()[0];
 
+      console.log(window);
+
       window.on("enter-full-screen", () => {
         this.fullscreen.set(true);
       });

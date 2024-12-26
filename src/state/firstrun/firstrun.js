@@ -8,7 +8,6 @@ export default async function render() {
   const progressText = document.querySelector("#stateLoader.first-run #progressText");
   const circlesDiv = document.querySelector("#stateLoader.first-run .circles");
 
-  const startTime = new Date().getTime();
   await displayStatus("Hi there");
   await displayStatus("Preparing Inepta\nDon't turn off your device", "shrunk");
 
@@ -29,8 +28,7 @@ export default async function render() {
     await Sleep(2000);
   }
 
-  const endTime = new Date().getTime();
-  const duration = endTime - startTime;
+  const startTime = new Date().getTime();
 
   circlesDiv.classList.add("visible");
   progressText.innerHTML = "Deploying filesystem &mdash; 0% Complete";
@@ -47,6 +45,11 @@ export default async function render() {
 
     await Sleep(10);
   });
+
+  const endTime = new Date().getTime();
+  const duration = endTime - startTime;
+
+  clone.setRegistryValue("elapsed", duration);
 
   circlesDiv.classList.remove("visible");
 

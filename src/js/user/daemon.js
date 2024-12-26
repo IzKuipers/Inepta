@@ -57,7 +57,7 @@ export class UserDaemon extends Process {
 
   async loadPreferences() {
     try {
-      const contents = this.fs.readFile(this.preferencesPath, this.userId);
+      const contents = await this.fs.readFile(this.preferencesPath, this.userId);
 
       UserData.set({
         ...JSON.parse(contents.toString()),
@@ -66,7 +66,7 @@ export class UserDaemon extends Process {
     } catch {
       UserData.set(DefaultUserPreferences);
 
-      this.fs.writeFile(
+      await this.fs.writeFile(
         this.preferencesPath,
         JSON.stringify({ ...DefaultUserPreferences, username: this.username }),
         this.userId
@@ -75,9 +75,9 @@ export class UserDaemon extends Process {
   }
 
   preferencesSync() {
-    UserData.subscribe((v) => {
+    UserData.subscribe(async (v) => {
       if (this._disposed) return;
-      this.fs.writeFile(this.preferencesPath, JSON.stringify(v, null, 2), this.userId);
+      await this.fs.writeFile(this.preferencesPath, JSON.stringify(v, null, 2), this.userId);
     });
   }
 

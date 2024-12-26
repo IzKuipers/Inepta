@@ -60,7 +60,7 @@ export class CloneModule extends KernelModule {
           continue;
         }
 
-        this.fs.writeFile(`System/${path}`, await readFile(path), "SYSTEM");
+        await this.fs.writeFile(`System/${path}`, await readFile(path), "SYSTEM");
 
         await cb(path);
       } catch {

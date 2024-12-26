@@ -23,11 +23,11 @@ export class FileSystem extends KernelModule {
   }
 
   // Called by kernel to initialize the filesystem
-  _init() {
+  async _init() {
     Log("FileSystem._init", "Constructing new Filesystem integration");
 
     // Set the root directory path using getAppDataPath method.
-    this.root = this.getAppDataPath();
+    this.root = await this.getAppDataPath();
 
     // Ensure the root directory exists, create it if it doesn't
     if (!fs.existsSync(this.root)) {
@@ -36,7 +36,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Determines the application data path based on the OS platform.
-  getAppDataPath() {
+  async getAppDataPath() {
     const platform = os.platform();
 
     // Return platform-specific application data directory paths.
@@ -46,7 +46,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Ensures a directory exists, creating it if it doesn't.
-  ensureDirSync(dirPath) {
+  async ensureDirSync(dirPath) {
     dirPath = dirPath.replaceAll("\\", "/").replace("./", "");
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true }); // Create the directory if it doesn't exist, including parent directories.
@@ -54,7 +54,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Traverses the filesystem and verifies that a directory exists.
-  traverse(pathStr) {
+  async traverse(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the given path string.
@@ -72,12 +72,12 @@ export class FileSystem extends KernelModule {
   }
 
   // Writes data to a file, creating the file and directories if necessary.
-  writeFile(pathStr, content) {
+  async writeFile(pathStr, content) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
     const dirPath = path.dirname(fullPath); // Get the directory part of the full path.
-    this.ensureDirSync(dirPath); // Ensure that the directory exists.
+    await this.ensureDirSync(dirPath); // Ensure that the directory exists.
 
     // If the content is a buffer, use it directly; otherwise, convert it to a buffer.
     const data = Buffer.isBuffer(content) ? content : Buffer.from(content);
@@ -85,7 +85,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Reads data from a file.
-  readFile(pathStr) {
+  async readFile(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -98,7 +98,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Deletes a file from the file system.
-  deleteFile(pathStr) {
+  async deleteFile(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -111,21 +111,21 @@ export class FileSystem extends KernelModule {
   }
 
   // Creates a directory (and parent directories, if necessary).
-  createDirectory(pathStr) {
+  async createDirectory(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
-    this.ensureDirSync(fullPath); // Ensure that the directory exists or is created recursively.
+    await this.ensureDirSync(fullPath); // Ensure that the directory exists or is created recursively.
   }
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
-  readDirectory(pathStr) {
+  async readDirectory(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     // If the user tries to break out of the filesystem bounds, don't let them.
     if (pathStr.includes("..")) throw new Error(`Directory ${pathStr} does not exist.`);
 
-    const fullPath = this.traverse(pathStr); // Traverse the path to ensure it's a valid directory.
+    const fullPath = await this.traverse(pathStr); // Traverse the path to ensure it's a valid directory.
     const dirEntries = fs.readdirSync(fullPath, { withFileTypes: true }); // Read directory entries with file type info.
 
     return {
@@ -151,7 +151,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Deletes a directory and its contents recursively.
-  deleteDirectory(pathStr) {
+  async deleteDirectory(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -164,7 +164,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Checks if a given path points to a file.
-  isFile(pathStr) {
+  async isFile(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -172,7 +172,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Checks if a given path points to a directory.
-  isDir(pathStr) {
+  async isDir(pathStr) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -180,7 +180,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Resets the file system by deleting all content in the root directory.
-  reset() {
+  async reset() {
     if (fs.existsSync(this.root)) {
       fs.rmdirSync(this.root, { recursive: true }); // Remove the root directory and its contents.
     }
@@ -188,7 +188,7 @@ export class FileSystem extends KernelModule {
   }
 
   // Returns the parent directory of the given path.
-  getParentDirectory(p) {
+  async getParentDirectory(p) {
     p = p.replaceAll("\\", "/").replace("./", "");
 
     const split = p.split("/"); // Split the path into its components using the path separator.
@@ -202,13 +202,13 @@ export class FileSystem extends KernelModule {
     return newPath; // Return the parent directory path.
   }
 
-  getAllPaths(pathStr = "/", userId) {
+  async getAllPaths(pathStr = "/", userId) {
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const allPaths = [];
 
-    const traverseDir = (currentPath) => {
-      const { dirs, files } = this.readDirectory(currentPath, userId);
+    const traverseDir = async (currentPath) => {
+      const { dirs, files } = await this.readDirectory(currentPath, userId);
 
       files.forEach((file) => allPaths.push(this.join(currentPath, file.name)));
       dirs.forEach((dir) => {
@@ -220,7 +220,7 @@ export class FileSystem extends KernelModule {
       });
     };
 
-    traverseDir(pathStr);
+    await traverseDir(pathStr);
 
     return allPaths;
   }

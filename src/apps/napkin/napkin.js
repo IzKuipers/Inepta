@@ -59,7 +59,7 @@ export default class NapkinProcess extends AppProcess {
       { caption: "About Napkin", action: this.safe(() => this.about()) },
     ]);
 
-    this.file.subscribe((v) => {
+    this.file.subscribe(async (v) => {
       if (!v) {
         this.filenameStatus.innerText = "New file";
         return this.windowTitle.set("Napkin");
@@ -71,7 +71,7 @@ export default class NapkinProcess extends AppProcess {
       this.windowTitle.set(`${filename} - Napkin`);
       this.filenameStatus.innerText = filename;
 
-      this.loadFile();
+      await this.loadFile();
     });
   }
 
@@ -110,9 +110,9 @@ export default class NapkinProcess extends AppProcess {
     });
   }
 
-  loadFile(path = this.file.get()) {
+  async loadFile(path = this.file.get()) {
     try {
-      const contents = this.fs.readFile(path, this.userId);
+      const contents = await this.fs.readFile(path, this.userId);
 
       this.textarea.value = contents;
       this.modified = false;
@@ -133,13 +133,13 @@ export default class NapkinProcess extends AppProcess {
     this.modified = false;
   }
 
-  save() {
+  async save() {
     try {
       const file = this.file.get();
 
       if (!file) return this.saveAs();
 
-      this.fs.writeFile(file, this.textarea.value, this.userId);
+      await this.fs.writeFile(file, this.textarea.value, this.userId);
       this.modified = false;
     } catch (e) {
       MessageBox({

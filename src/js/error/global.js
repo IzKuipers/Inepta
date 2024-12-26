@@ -5,6 +5,7 @@ export function handleGlobalErrors() {
   Log("handleGlobalErrors", "Handling error, unhandledrejection");
 
   function error(e) {
+    console.debug(e);
     e.preventDefault();
 
     Crash(e);
