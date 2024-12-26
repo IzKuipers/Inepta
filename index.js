@@ -4,7 +4,6 @@ import { app, BrowserWindow, globalShortcut, nativeTheme } from "electron";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import { VERSION } from "./src/env.js";
-
 import dotenv from "dotenv";
 
 const { parsed } = dotenv.config({ debug: true });
@@ -14,6 +13,8 @@ remote.initialize();
 let window;
 
 app.on("ready", async () => {
+  console.log("[Inepta] Entrypoint: READY.");
+
   await writeCommitHash();
 
   window = new BrowserWindow({
@@ -83,12 +84,22 @@ function toggleNativeTheme() {
 
 async function writeCommitHash() {
   try {
+    console.log("[Inepta] Entrypoint -> writeCommitHash: Executing git rev-parse HEAD");
+
     const hash = execSync(`git rev-parse HEAD`);
 
-    if (!existsSync("env")) await mkdir("env");
+    if (!existsSync("env")) {
+      console.log("[Inepta] Entrypoint -> writeCommitHash: Creating env directory");
+
+      await mkdir("env");
+    }
+
+    console.log("[Inepta] Entrypoint -> writeCommitHash: Writing HASH");
 
     await writeFile("./env/HASH", hash);
+
+    console.log("[Inepta] Entrypoint -> writeCommitHash: done.");
   } catch (e) {
-    console.warn("[FAILURE] Couldn't write commit hash. Maybe no Git or no permission.");
+    console.warn(`[Inepta] Entrypoint -> writeCommitHash: Couldn't write commit hash: ${e}`);
   }
 }
