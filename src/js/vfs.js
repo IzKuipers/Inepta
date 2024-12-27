@@ -47,7 +47,10 @@ export class FileSystem extends KernelModule {
 
   // Ensures a directory exists, creating it if it doesn't.
   async ensureDirSync(dirPath) {
+    if (!dirPath) return;
+
     dirPath = dirPath.replaceAll("\\", "/").replace("./", "");
+
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true }); // Create the directory if it doesn't exist, including parent directories.
     }
@@ -55,6 +58,8 @@ export class FileSystem extends KernelModule {
 
   // Traverses the filesystem and verifies that a directory exists.
   async traverse(pathStr) {
+    if (!pathStr) throw new Error(`Directory ${pathStr} does not exist.`); // Throw an error if the directory doesn't exist.
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the given path string.
@@ -73,6 +78,8 @@ export class FileSystem extends KernelModule {
 
   // Writes data to a file, creating the file and directories if necessary.
   async writeFile(pathStr, content) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -86,6 +93,8 @@ export class FileSystem extends KernelModule {
 
   // Reads data from a file.
   async readFile(pathStr) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -99,6 +108,8 @@ export class FileSystem extends KernelModule {
 
   // Deletes a file from the file system.
   async deleteFile(pathStr) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -112,6 +123,8 @@ export class FileSystem extends KernelModule {
 
   // Creates a directory (and parent directories, if necessary).
   async createDirectory(pathStr) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -120,6 +133,12 @@ export class FileSystem extends KernelModule {
 
   // Reads the contents of a directory, returning both files and subdirectories with metadata.
   async readDirectory(pathStr) {
+    if (!pathStr)
+      return {
+        dirs: [],
+        files: [],
+      };
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     // If the user tries to break out of the filesystem bounds, don't let them.
@@ -152,6 +171,8 @@ export class FileSystem extends KernelModule {
 
   // Deletes a directory and its contents recursively.
   async deleteDirectory(pathStr) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -165,6 +186,8 @@ export class FileSystem extends KernelModule {
 
   // Checks if a given path points to a file.
   async isFile(pathStr) {
+    if (!pathStr) return false;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -173,6 +196,8 @@ export class FileSystem extends KernelModule {
 
   // Checks if a given path points to a directory.
   async isDir(pathStr) {
+    if (!pathStr) return false;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const fullPath = path.join(this.root, pathStr); // Join root path with the provided path string.
@@ -189,6 +214,8 @@ export class FileSystem extends KernelModule {
 
   // Returns the parent directory of the given path.
   async getParentDirectory(p) {
+    if (!p) return p;
+
     p = p.replaceAll("\\", "/").replace("./", "");
 
     const split = p.split("/"); // Split the path into its components using the path separator.
@@ -203,6 +230,8 @@ export class FileSystem extends KernelModule {
   }
 
   async getAllPaths(pathStr = "/", userId) {
+    if (!pathStr) return;
+
     pathStr = pathStr.replaceAll("\\", "/").replace("./", "");
 
     const allPaths = [];

@@ -26,6 +26,9 @@ import { Sleep } from "../sleep.js";
 import { Store } from "../store.js";
 import { htmlspecialchars } from "../util.js";
 import { AppRendererError } from "./error.js";
+import { loadApp } from "./load.js";
+import { spawnApp } from "./spawn.js";
+import { AppStore } from "./store.js";
 
 const { randomUUID } = require("crypto");
 
@@ -34,6 +37,10 @@ export class AppRenderer extends Process {
   target;
   maxZIndex = 1e6;
   focusedPid = Store(-1);
+
+  static loadApp = loadApp;
+  static appStore = AppStore;
+  static spawnApp = spawnApp;
 
   constructor(handler, pid, parentPid, target) {
     super(handler, pid, parentPid); // Let's first initialize the Process

@@ -17,8 +17,7 @@ export class Environment extends KernelModule {
   }
 
   checkEnvironment() {
-    if (!this.registry.getValue(RegistryHives.local, "Environment"))
-      this.registry.setValue(RegistryHives.local, "Environment", {});
+    this.registry.setValue(RegistryHives.local, "Environment", {});
   }
 
   setProperty(key, value) {

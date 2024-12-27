@@ -20,6 +20,19 @@ export default class CabinetProcess extends AppProcess {
     this.path = path || this.environment.getProperty("userprofile");
     this.fs = this.kernel.getModule("fs");
     this.userLogic = this.kernel.getModule("userlogic");
+
+    if (!this.path) {
+      setTimeout(() => {
+        MessageBox({
+          title: "Property not registered",
+          message: `<code>Registry::LOCAL.Environment.USERPROFILE</code><br><br>Failed to get the User Profile path from the environment. This probably means that the Cabinet was opened in suboptimal conditions.`,
+          buttons: [{ caption: "Okay", action() {} }],
+          icon: MessageIcons.warning,
+        });
+      }, 100);
+
+      this.path = "./System";
+    }
   }
 
   render() {
@@ -31,8 +44,6 @@ export default class CabinetProcess extends AppProcess {
 
     this.breadCrumbs = this.getElement("#breadCrumbs", true);
 
-    this.updateLocations();
-    this.updateFavourites();
     this.navigationControls();
     this.updateBreadCrumbs();
 
@@ -84,6 +95,8 @@ export default class CabinetProcess extends AppProcess {
     }
 
     this.updateStatusbar();
+    this.updateLocations();
+    this.updatePlaces();
     this.populateDirectory();
 
     const aliasedPath =
@@ -208,8 +221,6 @@ export default class CabinetProcess extends AppProcess {
     return { item, icon, name, modified, created, size };
   }
 
-  updateFavourites() {}
-
   updateLocations() {
     const locations = this.getElement("#locations", true);
 
@@ -229,6 +240,34 @@ export default class CabinetProcess extends AppProcess {
 
     driveItem.append(driveIcon, driveCaption);
     locations.append(driveItem);
+  }
+
+  async updatePlaces() {
+    const places = this.getElement("#places", true);
+
+    places.innerHTML = "";
+
+    const userProfile = this.environment.getProperty("userprofile");
+    const userDirectory = await this.fs.readDirectory(userProfile);
+
+    for (const dir of userDirectory.dirs) {
+      const button = document.createElement("button");
+      const icon = document.createElement("img");
+      const span = document.createElement("span");
+
+      button.className = "item";
+
+      this.listener(button, "click", () => {
+        this.navigate(this.fs.join(userProfile, dir.name));
+      });
+
+      icon.src = "./assets/fs/folder.svg";
+      span.innerText = dir.name;
+
+      button.append(icon, span);
+
+      places.append(button);
+    }
   }
 
   async parentDir() {
