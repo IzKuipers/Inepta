@@ -1,7 +1,5 @@
 import { KERNEL, setKernel } from "../../env.js";
 import { Crash } from "../crash.js";
-import { handleConsoleIntercepts } from "../error/console.js";
-import { handleGlobalErrors } from "../error/global.js";
 import { Log, LogStore, LogType } from "../logging.js";
 import { StateHandler } from "../state/index.js";
 import { InitProcess } from "./init.js";
