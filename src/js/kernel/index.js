@@ -4,6 +4,8 @@ import { Log, LogStore, LogType } from "../logging.js";
 import { StateHandler } from "../state/index.js";
 import { InitProcess } from "./init.js";
 import { CoreKernelModules } from "./module/store.js";
+import { handleConsoleIntercepts } from "../error/console.js";
+import { handleGlobalErrors } from "../error/global.js";
 
 const { readFile } = require("fs/promises");
 
@@ -34,8 +36,8 @@ class _kernel {
 
     setKernel(this);
 
-    // handleGlobalErrors();
-    // handleConsoleIntercepts();
+    handleGlobalErrors();
+    handleConsoleIntercepts();
 
     this.LIVE_MODE = navigator.userAgent.includes("LIVEMODE");
   }
