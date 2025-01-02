@@ -200,10 +200,14 @@ export default class LoginAppProcess extends AppProcess {
     await Sleep(100);
 
     for (const [pid, proc] of this.handler.store.get()) {
+      if (pid === this._pid) continue;
+
       this.displayStatus(`Terminating process ${pid}`);
 
       if (proc.closeWindow) await proc.closeWindow();
     }
+
+    await this.closeWindow();
 
     this.registry.setValue(RegistryHives.local, "LoginApp.lastUser", username);
 

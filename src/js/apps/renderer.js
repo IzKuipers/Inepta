@@ -28,7 +28,7 @@ import { htmlspecialchars } from "../util.js";
 import { AppRendererError } from "./error.js";
 import { loadApp } from "./load.js";
 import { spawnApp } from "./spawn.js";
-import { AppStore } from "./store.js";
+import { AppStore, builtInApps } from "./store.js";
 
 const { randomUUID } = require("crypto");
 
@@ -41,6 +41,7 @@ export class AppRenderer extends Process {
   static loadApp = loadApp;
   static appStore = AppStore;
   static spawnApp = spawnApp;
+  static builtins = builtInApps;
 
   constructor(handler, pid, parentPid, target) {
     super(handler, pid, parentPid); // Let's first initialize the Process

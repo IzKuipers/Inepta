@@ -4,11 +4,22 @@ import { MessageBox } from "../../js/desktop/message.js";
 import { MessageIcons } from "../../js/images/msgbox.js";
 
 export default class WallpaperProcess extends AppProcess {
-  constructor(handler, pid, parentPid, app) {
+  forceLaunch = false;
+
+  constructor(handler, pid, parentPid, app, forceLaunch = false) {
     super(handler, pid, parentPid, app);
+
+    this.forceLaunch = forceLaunch;
   }
 
   render() {
+    const stateHandler = this.kernel.getModule("state");
+    const { currentState } = stateHandler;
+
+    if (currentState !== "desktop" && !this.forceLaunch) {
+      throw new AppRuntimeError(`Can't launch Wallpaper: invalid context`);
+    }
+
     const desktop = this.getBody();
 
     if (!desktop) throw new AppRuntimeError("Huh?!");

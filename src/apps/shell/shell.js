@@ -20,14 +20,24 @@ class _shellProc extends AppProcess {
   startMenu;
   appList;
 
-  constructor(handler, pid, parentPid, app) {
+  forceLaunch = false;
+
+  constructor(handler, pid, parentPid, app, forceLaunch = false) {
     super(handler, pid, parentPid, app);
 
     this.powerLogic = IneptaKernel().getModule("powerlogic");
     this.environment.setProperty("SHELLPID", this._pid);
+    this.forceLaunch = forceLaunch;
   }
 
   render() {
+    const stateHandler = this.kernel.getModule("state");
+    const { currentState } = stateHandler;
+
+    if (currentState !== "desktop" && !this.forceLaunch) {
+      throw new AppRuntimeError(`Can't launch Shell: invalid context`);
+    }
+
     this.checkSafeShutdown();
 
     this.userData = UserData.get();
@@ -185,9 +195,19 @@ class _shellProc extends AppProcess {
   initializeStartMenu() {
     UserData.subscribe(
       this.safe((v) => {
-        if (!v) return (this.usernameField.innerText = "Stranger");
+        if (!v) return;
 
-        this.usernameField.innerText = v.username || "Stranger";
+        if (!v.username) {
+          MessageBox({
+            title: "Property not registered",
+            message:
+              "UserData.username<br><br>Failed to get Username from the UserData store. This probably means that the Shell was opened in suboptimal conditions.",
+            buttons: [{ caption: "Okay", action() {} }],
+            icon: MessageIcons.warning,
+          });
+        }
+
+        this.usernameField.innerText = v.username;
       })
     );
 
