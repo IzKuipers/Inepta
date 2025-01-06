@@ -37,8 +37,9 @@ body {
 }
 
 main#main {
-  padding: 5px;
+  padding: 0;
   transition: opacity 300ms;
+  height: 0;
 }
 
 main#main.hidden {

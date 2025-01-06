@@ -42,5 +42,5 @@ export default async function render() {
     alert(e);
   }
 
-  throw reason;
+  throw text;
 }
