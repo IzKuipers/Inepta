@@ -21,9 +21,9 @@ export const States = {
     identifier: "crash-screen",
   },
   login: {
-    js: "../../state/newlogin/newlogin.js",
-    css: "./css/state/newlogin.css",
-    html: "./state/newlogin/newlogin.html",
+    js: "../../state/login/login.js",
+    css: "./css/state/login.css",
+    html: "./state/login/login.html",
     name: "Login",
     identifier: "login",
   },

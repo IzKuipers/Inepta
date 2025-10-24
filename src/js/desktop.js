@@ -1,5 +1,4 @@
 import { LoginApp } from "../apps/loginapp/metadata.js";
-import { NewLoginApp } from "../apps/newloginapp/metadata.js";
 import { loadApp } from "./apps/load.js";
 import { spawnApp } from "./apps/spawn.js";
 import { AppStore } from "./apps/store.js";
@@ -48,6 +47,5 @@ export default async function render() {
   window.loadApp = loadApp;
   window.apps = AppStore;
   window.loginApp = LoginApp;
-  window.newLoginApp = NewLoginApp;
   window.logs = LogStore;
 }
