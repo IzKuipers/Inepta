@@ -28,21 +28,6 @@ export default async function render() {
 
   // DEBUG AREA STARTS HERE ///////////////////////////////////////////////////////////////////////
 
-  document.addEventListener("keydown", async (e) => {
-    if (e.key.toLowerCase() === "f8") {
-      e.preventDefault();
-      const links = document.querySelectorAll(`link[rel="stylesheet"]`);
-
-      for (const link of links) {
-        const href = `${link.href}`;
-
-        link.href = "";
-        await Sleep(100);
-        link.href = href;
-      }
-    }
-  });
-
   window.spawnApp = spawnApp;
   window.loadApp = loadApp;
   window.apps = AppStore;

@@ -1,18 +1,6 @@
-div.window:not(.core) > div.body input,
-div.window:not(.core) > div.body textarea {
+input {
   padding: 0 10px;
-  height: 32px;
-  background-color: var(--button-active-bg);
-  border: var(--button-bg) 1px solid;
-  border-radius: 5px;
-}
-
-div.window:not(.core) > div.body textarea,
-div.window:not(.core) > div.body input:focus {
-  border: var(--accent) 1px solid;
-}
-
-div.window:not(.core) > div.body textarea {
-  padding: 5px 10px;
-  height: fit-content;
+  height: 30px;
+  background-color: var(--background);
+  border: var(--border-color) 1px solid;
 }

@@ -56,7 +56,7 @@ export class AppProcess extends Process {
   }
 
   getBody() {
-    const body = document.querySelector(`div.window[data-pid="${this._pid}"]`);
+    const body = document.querySelector(`div.window[data-pid="${this._pid}"] > div.body`);
 
     return body || undefined;
   }

@@ -1,10 +1,4 @@
-div.window.loginApp {
-  max-height: fit-content !important;
-  min-height: 200px !important;
-  height: unset !important;
-}
-
-div.window.loginApp > div.body {
+div.window.loginApp > div.body div.window-content {
   padding: 0;
 }
 
@@ -15,8 +9,8 @@ div.loginApp div#banner {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  background-color: var(--button-active-bg);
-  border-bottom: var(--accent-darker) 3px solid;
+  background-color: var(--background-secondary);
+  border-bottom: var(--border-color) 1px solid;
   position: relative;
 }
 
