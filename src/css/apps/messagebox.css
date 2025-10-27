@@ -1,9 +1,9 @@
-div.window.msgBox {
+/* div.window.msgBox {
   width: fit-content !important;
   background-color: var(--bg);
   backdrop-filter: none;
-}
-
+} */
+/* 
 div.window.msgBox div.titlebar {
   background-color: transparent;
   border-bottom: 0;
@@ -52,4 +52,4 @@ div.window.msgBox div.body div.top h1 {
 
 div.window.msgBox div.body div.top p {
   margin: 0;
-}
+} */

@@ -10,7 +10,11 @@ div.window div.titlebar div.window-title {
   padding: 0 8px;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 8px;
+}
+
+div.window div.titlebar div.window-title img {
+  height: 16px;
 }
 
 div.window div.titlebar div.controls {

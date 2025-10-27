@@ -12,21 +12,20 @@ div.window.initialSetup div.body {
 div.window.initialSetup div.top {
   display: flex;
   align-items: center;
-  height: calc(100% - 70px);
+  height: calc(100% - 40px);
   position: relative;
 }
 
 div.window.initialSetup div.top .master {
   margin: 40px auto;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   width: 96px;
   height: 96px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 48px;
-  border-radius: 50%;
-  background-color: var(--button-bg);
+  color:var(--red);
 }
 
 div.window.initialSetup div.top .master > img {
@@ -74,9 +73,9 @@ div.window.initialSetup div.top div.main-content {
 }
 
 div.window.initialSetup div.top h1.title {
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 div.window.initialSetup div.top h1.title + p {
@@ -88,10 +87,11 @@ div.window.initialSetup div.top h1.title + p {
 
 div.window.initialSetup div.bottom {
   /* border-top: var(--border); */
-  height: 70px;
+  height: 40px;
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0;
+  border-top: var(--border-color) 1px solid;
 }
 
 div.window.initialSetup div.bottom div.actions,
@@ -114,17 +114,24 @@ div.window.initialSetup div.bottom div.actions button {
   width: 40px;
   height: 40px;
   padding: 0;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+div.window.initialSetup div.bottom div.actions button:first-child {
+  border-right: var(--border-color) 1px solid;
+}
+
+div.window.initialSetup div.bottom div.actions button:last-child {
+  border-left: var(--border-color) 1px solid;
+}
+
 div.window.initialSetup div.top div.field {
-  background-color: var(--button-bg);
+  background-color: var(--background);
   margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 10px;
+  padding: 5px;
+  border:var(--border-color) 1px solid
 }
 
 div.window.initialSetup div.top div.field span.name {
