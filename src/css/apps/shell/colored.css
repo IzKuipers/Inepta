@@ -1,0 +1,40 @@
+#main.colored-shell div.window.shell div.taskbar,
+#main.colored-shell div.window.shell div#startMenu {
+  background-color: var(--colored-shell-bg);
+}
+
+#main.colored-shell div.window.shell div.taskbar button.focused {
+  background-color: var(--colored-shell-bg);
+}
+
+#main.colored-shell div.window.shell div.taskbar #activeApps button:active {
+  background-color: var(--start-button-active-bg);
+}
+
+#main.colored-shell div.window.shell div.taskbar div.system-area {
+  background-color: var(--start-button-active-bg);
+}
+
+#main.colored-shell div.window.shell div.taskbar {
+  border-top-color: var(--start-button-bg);
+}
+
+#main.colored-shell div.window.shell div.taskbar button#startButton {
+  border-right-color: var(--start-button-bg);
+}
+
+#main.colored-shell div.window.shell div#startMenu {
+  border-color: var(--start-button-bg);
+}
+
+#main.colored-shell div.window.shell div#startMenu div.top {
+  border-bottom-color: var(--start-button-hover-bg);
+}
+
+#main.colored-shell div.window.shell div#startMenu div.bottom {
+  border-top-color: var(--start-button-hover-bg);
+}
+
+#main.colored-shell div.window.shell div#startMenu div.middle div.right {
+  border-left-color: var(--start-button-hover-bg);
+}

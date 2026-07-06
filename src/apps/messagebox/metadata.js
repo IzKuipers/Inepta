@@ -4,8 +4,8 @@ export const MsgBoxApp = {
     version: "1.0.0",
     author: "Izaak Kuipers",
   },
-  size: { w: 300, h: 100 },
-  minSize: { w: 300, h: 100 },
+  size: { w: NaN, h: NaN },
+  minSize: { w: 300, h: 50 },
   maxSize: { w: 700, h: 700 },
   position: { centered: true },
   state: {

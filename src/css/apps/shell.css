@@ -1,0 +1,14 @@
+@import url("./shell/taskbar.css");
+@import url("./shell/startmenu.css");
+@import url("./shell/colored.css");
+
+div.window.shell > div.body,
+div.window.shell {
+  z-index: 1000000000000000000 !important;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+div.window.shell > div.body * {
+  pointer-events: initial;
+}

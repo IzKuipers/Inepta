@@ -1,0 +1,19 @@
+div.window.progManRunPromptApp > div.body {
+  display: flex;
+  gap: 15px;
+}
+
+div.window.progManRunPromptApp div.right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+
+div.window.progManRunPromptApp div.actions {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: end;
+}

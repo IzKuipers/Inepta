@@ -11,28 +11,21 @@ html,
 body {
   width: 100%;
   height: 100%;
+  background-color: #000;
   margin: 0;
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: "Source Code Pro";
-  font-size: 12px;
+  overflow: hidden;
+  font-family: "Open Sans";
+  font-size: 14px;
 }
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: inherit;
+  color: var(--fg, #fff);
+  margin: 0;
   font-size: inherit;
-  color: inherit;
-  outline: none;
+  font-family: inherit;
   user-select: none;
-  scrollbar-width: thin;
-  scrollbar-color: var(--button-hover) var(--background);
-}
-
-::selection {
-  background: var(--button-hover);
+  outline: none !important;
 }
 
 .fullscreen {

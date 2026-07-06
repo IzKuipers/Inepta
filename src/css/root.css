@@ -1,29 +1,54 @@
-:root,
-:root * {
-  --border-color: #444444;
-  --background: #222222;
-  --background-transparent: #222222cc;
-  --background-secondary: #333333;
-  --button-hover: #3f3f3f;
-  --button-active: #1f1f1f;
-  --foreground: #dddddd;
-  --foreground-transparent: #dddddd80;
-  --red: #f36b6b;
-  --box-shadow: 4px 4px 12px 3px #00000040;
+:root #main,
+:root #main * {
+  --bg: #222;
+  --bg-transparent: #222d;
+  --fg: #fff;
+  --fg-secondary: #ddd;
+  --shell-bg: #000a;
+  --border-clr: #444;
+  --border: var(--border-clr) 1px solid;
+  --border-accent: var(--accent) 1px solid;
+  --border-accent-dark: var(--accent-darker) 1px solid;
+  --start-button-bg: #be490038;
+  --start-button-hover-bg: #be490066;
+  --start-button-active-bg: #752d0038;
+  --colored-shell-bg: #3b1700b3;
+  --accent: #ff6200;
+  --accent-dark: #bb4800;
+  --accent-darker: #9c3c00;
+  --accent-superdark: #3b2619;
+  --accent-light: #ff9553;
+  --button-semitransparent-bg: #333d;
+  --button-bg: #333;
+  --button-hover-bg: #444;
+  --button-active-bg: #111;
+  --secondary-border: var(--bg) 1px solid;
 }
 
 :root #main:has(#stateLoader[data-theme="light"]),
 :root #main:has(#stateLoader[data-theme="light"]) * {
-  --border-color: #d9d9d9;
-  --background: #ffffff;
-  --background-transparent: #ffffffcc;
-  --background-secondary: #f6f6f6;
-  --button-hover: #e0e0e0;
-  --button-active: #b6b6b6;
-  --foreground: #242424;
-  --foreground-transparent: #24242480;
-  --red: #f36b6b;
-  --box-shadow: 4px 4px 12px 3px #00000040;
+  --bg: #fff;
+  --bg-transparent: rgba(255, 255, 255, 0.89);
+  --fg: #333;
+  --fg-secondary: #666;
+  --shell-bg: #fffe;
+  --border-clr: #bbb;
+  --border: var(--border-clr) 1px solid;
+  --border-accent: var(--accent) 1px solid;
+  --border-accent-dark: var(--accent-darker) 1px solid;
+  --start-button-bg: #be49005e;
+  --start-button-hover-bg: #be49009a;
+  --start-button-active-bg: #752d0044;
+  --accent: #ff9858;
+  --accent-dark: #ff7f2f;
+  --accent-darker: #b85b21;
+  --accent-superdark: #3b2619;
+  --accent-light: #ffc5a1;
+  --button-semitransparent-bg: #eeeeeedd;
+  --button-bg: #eeeeee;
+  --button-hover-bg: #dddddd;
+  --button-active-bg: #dfdfdf;
+  --secondary-border: none;
 }
 
 ::selection {

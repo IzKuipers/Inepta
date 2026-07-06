@@ -1,4 +1,5 @@
 import { LoginApp } from "../apps/loginapp/metadata.js";
+import { NewLoginApp } from "../apps/newloginapp/metadata.js";
 import { loadApp } from "./apps/load.js";
 import { spawnApp } from "./apps/spawn.js";
 import { AppStore } from "./apps/store.js";
@@ -28,9 +29,25 @@ export default async function render() {
 
   // DEBUG AREA STARTS HERE ///////////////////////////////////////////////////////////////////////
 
+  document.addEventListener("keydown", async (e) => {
+    if (e.key.toLowerCase() === "f8") {
+      e.preventDefault();
+      const links = document.querySelectorAll(`link[rel="stylesheet"]`);
+
+      for (const link of links) {
+        const href = `${link.href}`;
+
+        link.href = "";
+        await Sleep(100);
+        link.href = href;
+      }
+    }
+  });
+
   window.spawnApp = spawnApp;
   window.loadApp = loadApp;
   window.apps = AppStore;
   window.loginApp = LoginApp;
+  window.newLoginApp = NewLoginApp;
   window.logs = LogStore;
 }
